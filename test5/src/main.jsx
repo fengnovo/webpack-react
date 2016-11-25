@@ -11,9 +11,10 @@ function reducer (state = {
 },action) {
 	switch (action.type) {
 		case 'change': 
+			console.log('Hello,'+ action.payload);
 			return {
-				text: action.payload,
-				name: 'Hello,'+ action.payload
+				name: action.payload,
+				text: 'Hello '+ action.payload
 			};
 		default :
 			return state;

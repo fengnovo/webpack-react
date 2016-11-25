@@ -13,7 +13,7 @@ class MyComponent extends React.Component {
 	}
 }
 
-function mapStateToProps (){
+function mapStateToProps (state){
 	return {
 		text: state.text,
 		name: state.name
