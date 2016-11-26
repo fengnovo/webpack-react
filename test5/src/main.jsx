@@ -1,9 +1,34 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore } from 'redux'
-import { Provider } from 'react-redux'
+import { Provider,connect} from 'react-redux'
 
-import App from './App.js'
+class MyComponent extends React.Component {
+	render () {
+		return (
+			<div className="index">
+				<p>{this.props.text}</p>
+				<input defaultValue={this.props.name} onChange={this.props.onChange} />
+			</div>
+		)
+	}
+}
+
+function mapStateToProps (state){
+	return {
+		text: state.text,
+		name: state.name
+	}
+}
+
+function mapDispatchToProps(dispatch){
+	return {
+		onChange: (e) => dispatch({
+			type: 'change',
+			payload: e.target.value
+		})
+	}
+}
 
 function reducer (state = {
 	text: 'Hello fengnovo',
@@ -22,6 +47,11 @@ function reducer (state = {
 } 
 
 const store = createStore(reducer);
+
+const App = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(MyComponent);
 
 ReactDOM.render(
 	<Provider store={store}>
