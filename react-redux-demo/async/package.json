@@ -1,0 +1,23 @@
+{
+  "name": "async",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "^0.6.0",
+    "redux-logger": "^2.6.1"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.9.1",
+    "react": "15.3.2",
+    "react-dom": "15.3.2",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2",
+    "redux-thunk": "^2.1.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "clean": "rimraf dist",
+    "build:webpack": "webpack --config webpack.production.config.js --progress --colors",
+    "build": "npm run clean && npm run build:webpack"
+  }
+}
