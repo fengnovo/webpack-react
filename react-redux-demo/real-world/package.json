@@ -22,8 +22,7 @@
     "redux-thunk": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "webpack-dev-server --port=3004 --inline --host 0.0.0.0 --colors --hot",
     "eject": "react-scripts eject"
   }
 }
