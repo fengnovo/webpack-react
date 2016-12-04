@@ -21,20 +21,26 @@ const mapDispatchToProps = dispatch => {
 class UserListApp extends React.Component {
     constructor (props) {
         super (props)
+        this.state = {
+            data: []
+        }
     }
     componentWillMount () {
         const {actions} = this.props
-         console.log(this.props);
+        //  console.log(this.props);
+         let _this = this;
         axios.get('/mock/users.json')
             .then(ret=>{
-                // console.log(ret);
-                // console.log(actions);
-                // action.setUser(ret.data)
+                // actions.setUser(ret.data)
+                // console.log(ret.data);
+                _this.setState({
+                    data: ret.data.userById
+                })
             })
     }
     render (){
         return (
-            <div>UserListApp</div>
+            <UserList {...this.state} />
         )
     }
 }

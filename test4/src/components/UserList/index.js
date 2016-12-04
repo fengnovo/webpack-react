@@ -5,9 +5,10 @@ class UserList extends React.Component {
         super (props)
     }
     render (){
-        let liArr = [];
-        this.props.liArr.map((item,i)=>{
-            liArr.push(<li key={i}>{item}</li>)
+        // console.log(this.props);
+        let liArr = [], {data} = this.props
+        data.map((item)=>{
+            liArr.push(<li key={item.id}>{item.name}</li>)
         })
         return (
             <ul>
