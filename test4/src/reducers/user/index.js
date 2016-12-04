@@ -1,4 +1,4 @@
-import * as types from '../../constants'
+import * as types from '../../constants/ActionTypes'
 
 const initalState = {
     users: [],
@@ -6,7 +6,7 @@ const initalState = {
 }
 
 const user = (state =  initalState, action) => {
-    switch (type.SET_USER){
+    switch (action.type){
         case types.SET_USER:
             return {
                 ...state,

@@ -1,7 +1,12 @@
+import { combineReducers } from 'redux'
+import user from './user'
 
 
-let reducers = () => { 
 
+const reducers =  { 
+    user
 }
 
-export default reducers
+export default combineReducers( {
+    ...reducers
+})
