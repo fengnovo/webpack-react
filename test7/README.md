@@ -1,6 +1,6 @@
-# redux最最简单实例练习  
-redux跟react其实没关系!   
+#  react redux练手    
 ```
-npm install  
-node test6/src/test.js  
+npm install   
+npm start
+
 ```
