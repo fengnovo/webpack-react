@@ -1,6 +1,1 @@
-#  react   
-```
-npm install   
-npm start
-
-```
+#根据http://cn.redux.js.org/例子练习
