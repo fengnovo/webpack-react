@@ -1,1 +1,1 @@
-#根据http://cn.redux.js.org/例子练习
+#根据http://cn.redux.js.org/ 例子练习
