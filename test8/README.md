@@ -1,1 +1,1 @@
-#根据http://cn.redux.js.org/ 例子练习
+明天写一个redux项目
