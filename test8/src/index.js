@@ -1,30 +1,16 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import Redux, { createStore } from 'redux';
- 
-// import { reducer } from './reducer';
-// import { App } from './app';
- 
-// const store = createStore(reducer);
- 
-// const render = () => (
-//   ReactDOM.render(<App store={store}/>,
-//     document.getElementById('example'))
-// )
- 
-// store.subscribe(render);
- 
-// render();
+import React from 'react'
+import { render } from 'react-dom'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import App from './containers/App'
+import todoApp from './reducers'
 
+let store = createStore(todoApp)
 
-'use strict';
- 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Redux, { createStore } from 'redux';
- 
-import { reducer } from './reducer';
-import { App } from './app';
- 
-ReactDOM.render(<App store={createStore(reducer)}/>,
-                document.getElementById('example'));
+let rootElement = document.getElementById('root')
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  rootElement
+)
