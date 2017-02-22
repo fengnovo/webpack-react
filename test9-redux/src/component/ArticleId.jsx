@@ -46,15 +46,14 @@ class ArticleId extends Component {
         );
     }
     componentDidMount() {
-        this.ajax = Tool.get('/article/view.aspx', {
-            output: 'json',
-            siteid: config.siteid,
-            id: this.props.params.id
-        }, (data) => {
+        this.ajax = Tool.get('https://cnodejs.org/api/v1/topic/'+this.props.params.id, {
+            id :this.props.params.id
+        },
+        (data) => {
             this.setState({
                 loadMsg: '加载完成',
                 loadState: 2,
-                data: data
+                data: data.data
             });
         }, () => {
             this.setState({
@@ -70,12 +69,12 @@ class ArticleId extends Component {
 
 class View extends Component {
     render() {
-        let {book_title, book_content, book_click} = this.props;
+        let {title, content, author} = this.props;
         return (
             <div className="article-view">
-                <h2>{book_title}</h2>
-                <div className="yue">阅读：{book_click}</div>
-                <article dangerouslySetInnerHTML={{ __html: book_content }}>{}</article>
+                <h2>{title}</h2>
+                <div className="yue">作者：{author && author.loginname}</div>
+                <article dangerouslySetInnerHTML={{ __html: content }}></article>
             </div>
         );
     }

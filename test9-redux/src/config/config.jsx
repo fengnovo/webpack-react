@@ -1,8 +1,8 @@
 const config = {};
 
-config.version = '1.0.4'
+config.version = '1.0.0'
 
-config.indexTitle = '柯林 Article APP'; //首页标题
+config.indexTitle = 'fengnovo CNODE'; //首页标题
 
 config.siteid = '1000'; //默认网站id
 

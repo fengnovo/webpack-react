@@ -10,7 +10,7 @@ import action from '../action/index';
 import Tool from '../lib/Tool/Tool';
 import config from '../config/config';
 import {Header, Footer, Loading} from './common/index';
-import erweima from '../erweima.png';
+import erweima from '../weibo@fengnovo.png';
 
 
 class About extends Component {
@@ -23,7 +23,8 @@ class About extends Component {
                         <div className="pictrue"><img src={erweima} /></div>
                     </div>
                     <div className="info">{config.indexTitle} {config.version}</div>
-                    <div>github：<a href="https://github.com/1340641314/react-kelink" target="_blank">134064134</a></div>
+                    <div>github：<a href="https://github.com/fengnovo" target="_blank">@fengnovo</a></div>
+                    <div>微博：<a href="http://weibo.com/u/1900251814" target="_blank">@fengnovo</a></div>
                 </div>
             </div>
         );

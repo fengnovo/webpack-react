@@ -10,7 +10,7 @@ import action from '../action/index';
 import Tool from '../lib/Tool/Tool';
 import config from '../config/config';
 import {Header, Footer, Loading} from './common/index';
-import erweima from '../erweima.png';
+import erweima from '../weibo@fengnovo.png';
 
 
 class User extends Component {
@@ -21,8 +21,8 @@ class User extends Component {
                 <div className="user">
                     <div className="head">
                         <div className="headimg" data-flex="dir:top main:center cross:center">
-                            <div className="pictrue" style={{ backgroundImage: 'url(http://vpic.video.qq.com/4252003160/t0156a0xb39_ori_1.jpg)' }}></div>
-                            <div className="name">狼族小狈</div>
+                            <div className="pictrue" style={{ backgroundImage: 'url(http://ww3.sinaimg.cn/mw690/71438aa6jw8f3osl35mmhj20ro0rotar.jpg)' }}></div>
+                            <div className="name">fengnovo</div>
                         </div>
                     </div>
                     <div className="logins" data-flex="box:mean">

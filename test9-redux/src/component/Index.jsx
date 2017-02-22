@@ -45,7 +45,7 @@ class Index extends Component {
         */
         this.DOMLoad = (props, state) => {
             let {GET_DATA_START, GET_DATA_SUCCESS, GET_DATA_ERROR} = props;
-            let classid = state.classid[this.classid];
+            let classid = state && state.classid[this.classid] || '0';
             let data = {
                 siteid: config.siteid,
                 classid: this.classid,
@@ -56,13 +56,14 @@ class Index extends Component {
             window.scrollTo(classid.scrollX, classid.scrollY); //设置滚动条位置
             if (!classid.getNextBtn) return false; //已经全部加载完成分页了，无需重新加载
             this.newGetNext = new GetNext(this.refs.dataload, {
-                url: '/article/list.aspx',
+                url: 'https://cnodejs.org/api/v1/topics',
                 data: data,
                 start: (el) => { //开始加载
                     classid.loadState = 0;
                     GET_DATA_START(state);
                 },
                 load: (data) => { //加载成功
+                    data = data.data;
                     classid.page++;
                     if (classid.data && data && classid.data[classid.data.length - 1].id == data[data.length - 1].id || !data) {
                         classid.loadState = 2;
@@ -174,8 +175,16 @@ export class ArticleList extends Component {
             <ul className="article-list">
                 {
                     this.props.list.map((item, index) => {
-                        let {id, book_title, book_content, book_click, classname, book_classid, book_img} = item;
-                        book_content = book_content.substring(0, 50) + '...';
+                        
+                        let {id, title, content, author} = item;
+                        let book_title = title,
+                        book_content =  content,
+                        book_classid = 409,
+                        book_img = author && author.avatar_url,
+                        classname = 'pictrue',
+                        book_click = 453;
+                        
+                        book_content = book_content.substring(0, 100) + '...';
                         let images = null;
                         if (/^http/.test(book_img)) {
                             images = (
@@ -188,7 +197,7 @@ export class ArticleList extends Component {
                                 <Link to={'/article/' + id}>
                                     {images}
                                     <h3>{book_title}</h3>
-                                    <div className="content">{book_content}</div>
+                                    <div className="content" dangerouslySetInnerHTML={{__html: book_content}}></div>
                                 </Link>
                                 <div className="bottom" data-flex="main:justify">
                                     <div className="click">阅读：{book_click}</div>
