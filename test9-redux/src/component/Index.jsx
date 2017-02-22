@@ -32,6 +32,7 @@ class Index extends Component {
             初始化
         */
         this.initApp = (props, state) => {
+            // debugger
             let {location} = props;
             this.classid = /^\d+$/.test(location.query.classid) ? location.query.classid : config.indexClassId; //如果没有栏目id传过来，默认为0
             location.query.classid = this.classid;
@@ -45,7 +46,15 @@ class Index extends Component {
         */
         this.DOMLoad = (props, state) => {
             let {GET_DATA_START, GET_DATA_SUCCESS, GET_DATA_ERROR} = props;
-            let classid = state && state.classid[this.classid] || '0';
+            // debugger
+            // console.log(state);
+            // console.log(this.classid);
+            let classid;//state.classid[this.classid];
+            if(state){
+                classid = state.classid[this.classid];
+            }else{
+                classid = props && props.state && props.state.classid[this.classid];
+            }
             let data = {
                 siteid: config.siteid,
                 classid: this.classid,
@@ -109,7 +118,9 @@ class Index extends Component {
             classid.scrollX = window.scrollX;
             classid.scrollY = window.scrollY;
             SETSCROLL(state); //记录滚动条位置
-
+            // debugger
+            // console.log(state);
+            // console.log(classid);
             if (this.newGetNext) this.newGetNext.end(); //结束分页插件
         }
 
