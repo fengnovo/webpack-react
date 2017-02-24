@@ -7,4 +7,5 @@ npm start
 ## build  
 ```
 npm build  
-```
+``` 用来测试微信jssdk
+
