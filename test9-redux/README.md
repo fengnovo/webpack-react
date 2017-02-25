@@ -1,5 +1,5 @@
 # react-redux简单实例练习  
-react+redux实现conde网站api接口
+react+redux实现cnode网站api接口
 ```
 npm install  
 npm start  
