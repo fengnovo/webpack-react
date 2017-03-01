@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "description": "react redux",
   "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {},
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --devtool eval --progress --hot --content-base src",

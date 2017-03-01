@@ -16,7 +16,8 @@
     "babel-preset-stage-0": "^6.16.0",
     "css-loader": "^0.26.1",
     "style-loader": "^0.13.1",
-    "webpack": "^1.14.0"
+    "webpack": "^1.12.13",
+    "webpack-dev-server": "^1.11.0"
   },
   "scripts": {
     "start": "webpack-dev-server --port=3002 --inline --host 0.0.0.0 --colors --hot",
