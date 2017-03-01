@@ -19,7 +19,9 @@
     "react-router": "^2.6.1",
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "webpack": "^1.12.13",
+    "webpack-dev-server": "^1.11.0"
   },
   "scripts": {
     "start": "webpack-dev-server --port=3004 --inline --host 0.0.0.0 --colors --hot",
