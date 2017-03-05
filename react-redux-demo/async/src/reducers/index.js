@@ -48,9 +48,15 @@ const postsByReddit = (state = { }, action) => {
     case INVALIDATE_REDDIT:
     case RECEIVE_POSTS:
     case REQUEST_POSTS:
+      console.log(action);       //一开始是"REQUEST_POSTS"，之后是"RECEIVE_POSTS"
+     // {type: "RECEIVE_POSTS", reddit: "reactjs", posts: Array[25], receivedAt: 1488523742748}
+      console.log(action.reddit);         //reactjs
+      console.log(state);                 //{reactjs: Object}
+      console.log(state[action.reddit]);  //  Object
+      console.log({[action.reddit]:''});  // {reactjs: ""}
       return {
         ...state,
-        [action.reddit]: posts(state[action.reddit], action)
+        [action.reddit]: posts(state[action.reddit], action)  //？
       }
     default:
       return state

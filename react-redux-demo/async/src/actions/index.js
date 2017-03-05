@@ -4,22 +4,22 @@ export const SELECT_REDDIT = 'SELECT_REDDIT'
 export const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT'
 
 export const selectReddit = reddit => ({
-  type: SELECT_REDDIT,
+  type: SELECT_REDDIT,      //选择
   reddit
 })
 
 export const invalidateReddit = reddit => ({
-  type: INVALIDATE_REDDIT,
+  type: INVALIDATE_REDDIT,  //使之无效
   reddit
 })
 
 export const requestPosts = reddit => ({
-  type: REQUEST_POSTS,
+  type: REQUEST_POSTS,      //post请求
   reddit
 })
 
 export const receivePosts = (reddit, json) => ({
-  type: RECEIVE_POSTS,
+  type: RECEIVE_POSTS,      //接收请求
   reddit,
   posts: json.data.children.map(child => child.data),
   receivedAt: Date.now()
