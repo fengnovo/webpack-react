@@ -13,4 +13,6 @@ test1 webpack打包工具使用
 "dependencies": {  
     "webpack": "^1.12.13",  
     "webpack-dev-server": "^1.11.0"  
-  },  
+  }, 
+  
+ test-demo是官方例子
