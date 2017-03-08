@@ -15,10 +15,10 @@ export default class Header extends Component {
   render() {
     return (
       <header className="header">
-        <h1>todos</h1>
+        <h1>TODO任务</h1>
         <TodoTextInput newTodo
                        onSave={this.handleSave}
-                       placeholder="What needs to be done?" />
+                       placeholder="填入TODO任务?" />
       </header>
     )
   }

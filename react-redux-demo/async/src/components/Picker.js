@@ -1,5 +1,9 @@
 import React, { PropTypes } from 'react'
-
+/*
+<Picker value={selectedReddit}
+                onChange={this.handleChange}
+                options={[ 'reactjs', 'frontend' ]} />
+*/
 const Picker = ({ value, onChange, options }) => (
   <span>
     <h1>{value}</h1>
@@ -12,7 +16,7 @@ const Picker = ({ value, onChange, options }) => (
       }
     </select>
   </span>
-)
+) 
 
 Picker.propTypes = {
   options: PropTypes.arrayOf(

@@ -8,7 +8,11 @@ const Picker = ({ value, onChange, options }) => (
       'border': 'none',
       'width': '16rem',
       'height': '3rem',
-  
+      'lineHeight': '3rem',
+      'overflow': 'hidden',
+      'float': 'left',
+      'display': 'inline',
+      'margin':'0 10px 0 0',
       'background': 'url(http://img2.cache.netease.com/f2e/news/index2016/images/sprite_img0803.png) no-repeat',
       'backgroundPosition':'.5rem .5rem'
   }}/>

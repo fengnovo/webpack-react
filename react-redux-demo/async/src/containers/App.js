@@ -33,8 +33,8 @@ class App extends Component {
     e.preventDefault()
 
     const { dispatch, selectedReddit } = this.props
-    dispatch(invalidateReddit(selectedReddit))
-    dispatch(fetchPostsIfNeeded(selectedReddit))
+    dispatch(invalidateReddit(selectedReddit))  //点刷新时先将posts.didInvalidate设为true
+    dispatch(fetchPostsIfNeeded(selectedReddit)) //请求数据
   }
 
   render() {
@@ -57,7 +57,7 @@ class App extends Component {
                onClick={this.handleRefreshClick}>
               Refresh
             </a>
-          }
+          } 
         </p>
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)

@@ -16,7 +16,7 @@ export const invalidateReddit = reddit => ({
 export const requestPosts = reddit => ({
   type: REQUEST_POSTS,      //post请求
   reddit
-})
+}) 
 
 export const receivePosts = (reddit, json) => ({
   type: RECEIVE_POSTS,      //接收请求
@@ -42,7 +42,16 @@ const shouldFetchPosts = (state, reddit) => {
   }
   return posts.didInvalidate
 }
-
+/*{
+  postsByReddit : {
+          'reactjs':{
+              isFetching: false,
+              didInvalidate: false,
+              items: []
+            }
+        } ,
+  selectedReddit : 'reactjs'
+}*/
 export const fetchPostsIfNeeded = reddit => (dispatch, getState) => {
   if (shouldFetchPosts(getState(), reddit)) {
     return dispatch(fetchPosts(reddit))
