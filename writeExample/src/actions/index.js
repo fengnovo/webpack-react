@@ -15,7 +15,7 @@ export const TOGGLE = id => {      //切换办事项状态
     }
 }
 
-export const SELECT = filte => {      //查看办事项列表
+export const SELECTFILITER = filte => {      //查看办事项列表
     return {
         type: "SELECT",
         filte: filte

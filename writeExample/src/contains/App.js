@@ -2,6 +2,7 @@ import React from 'react'
 
 import AddTodo from './AddTodo'
 import TodoList from './Todos'
+import Footer from './Footer'
 
 class App extends React.Component {
     constructor (...args) {
@@ -11,6 +12,7 @@ class App extends React.Component {
         return <div>
                 <AddTodo />
                 <TodoList />
+                <Footer />
             </div>
     }
 }

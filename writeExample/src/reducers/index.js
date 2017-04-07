@@ -1,3 +1,4 @@
+
 //处理action行为
 const TodoReducer = (state,action) => {
     switch (action.type) {
@@ -52,6 +53,16 @@ const TodosReducer = (state=[],action) => {
 
         default:
             return state
+    }
+}
+
+const SelectFilterReducer = (state='ALL',action) => {
+    switch (action.type) {
+        case 'SELECT':
+            return action.filter
+            break
+        default:
+            break
     }
 }
 
