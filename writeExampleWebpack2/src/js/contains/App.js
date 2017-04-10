@@ -1,7 +1,8 @@
 import React from 'react'
 
 import AddTodo from './AddTodo'
-import TodoList from './Todos'
+import Todos from './Todos'
+import SelectLink from './SelectLink'
 
 class App extends React.Component {
     constructor (...args) {
@@ -10,7 +11,8 @@ class App extends React.Component {
     render (){
         return <div>
                 <AddTodo />
-                <TodoList />
+                <Todos />
+                <SelectLink />
             </div>
     }
 }

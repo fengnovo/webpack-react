@@ -3,9 +3,20 @@ import { dispatch } from 'redux'
 import { TOGGLE } from '../actions'
 import TodoList from '../components/TodoList'
 
+const getShowTodos = (todos,filter) => {
+    switch (filter) {
+        case "ALL":
+            return todos
+        case "COMPLETED":
+            return todos.filter(todo => todo.isCompleted)
+        case "ACTIVE":
+            return todos.filter(todo => !todo.isCompleted)
+    }
+}
+
 const mapStateToProps = state => {                 //这里参数不能加花括号
     return {
-        todos: state
+        todos: getShowTodos(state.todos, state.filter)
     }
 }
 

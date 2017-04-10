@@ -1,3 +1,4 @@
+import { combineReducers } from 'redux'
 
 //处理action行为
 const TodoReducer = (state,action) => {
@@ -60,10 +61,14 @@ const SelectFilterReducer = (state='ALL',action) => {
     switch (action.type) {
         case 'SELECT':
             return action.filter
-            break
         default:
-            break
+            return state
     }
 }
 
-export default TodosReducer
+const TodoAppReducer = combineReducers({
+    TodosReducer,
+    SelectFilterReducer
+})
+
+export default TodoAppReducer 
