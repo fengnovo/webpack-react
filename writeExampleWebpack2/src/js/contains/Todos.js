@@ -4,6 +4,7 @@ import { TOGGLE } from '../actions'
 import TodoList from '../components/TodoList'
 
 const getShowTodos = (todos,filter) => {
+    console.log(todos,filter);
     switch (filter) {
         case "ALL":
             return todos
@@ -11,12 +12,14 @@ const getShowTodos = (todos,filter) => {
             return todos.filter(todo => todo.isCompleted)
         case "ACTIVE":
             return todos.filter(todo => !todo.isCompleted)
+        default:
+            throw new Error('未知类型');
     }
 }
 
 const mapStateToProps = state => {                 //这里参数不能加花括号
     return {
-        todos: getShowTodos(state.todos, state.filter)
+        todos: getShowTodos(state.TodosReducer, state.SelectFilterReducer)
     }
 }
 

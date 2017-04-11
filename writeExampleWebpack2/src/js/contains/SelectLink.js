@@ -5,6 +5,7 @@ import { SELECTFILITER } from '../actions'
 const mapStateToProps = (state, ownProps) => {
     return {
         active: ownProps.filter === state.SelectFilterReducer
+        //active是用于显示正在显示的选项
     }
 }
 

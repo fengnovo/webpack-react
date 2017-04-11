@@ -6,7 +6,11 @@ const TodoList = ({ todos=[], onTodoClick }) => {      //来自props的，参数
     console.log(todos);
     return <ul>
         {
-            todos.map((item) => <Todo key={item.id} {...item} onclick={()=>onTodoClick(item.id)} />)
+            todos.map(item=> 
+                <Todo key={item.id} 
+                        {...item} 
+                        onclick={()=>onTodoClick(item.id)} 
+                />)
         }
     </ul>
 }

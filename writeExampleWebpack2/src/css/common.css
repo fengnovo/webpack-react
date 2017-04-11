@@ -1,1 +1,4 @@
 @import './css/font-awesome.min.css';
+ li {
+     list-style: none;
+ }

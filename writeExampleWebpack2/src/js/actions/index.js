@@ -15,9 +15,16 @@ export const TOGGLE = id => {      //切换办事项状态
     }
 }
 
-export const SELECTFILITER = filte => {      //查看办事项列表
+export const SELECTFILITER = filter => {      //查看办事项列表
     return {
         type: "SELECT",
-        filte: filte
+        filter: filter
     }
 }
+
+/*
+{
+    TodosReducer: [], 
+    SelectFilterReducer: "ALL"    "ACTIVE"    "COMPLETED"
+}
+*/

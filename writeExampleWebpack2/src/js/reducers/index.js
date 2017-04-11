@@ -25,37 +25,36 @@ const TodoReducer = (state,action) => {
         
 }
 
-// const TodosReducer = (state=[],action) => {
-//     switch (action.type) {
-//         case 'ADD':
-//             let addOne = TodoReducer(undefined,action)
-//             state = state.push(addOne)
-//             return state
-//         case 'TOGGLE': 
-//             state.map(item=>TodoReducer(item,action))
-//             return state
-//         default : 
-//             return state
-//     }
-// }
-
 const TodosReducer = (state=[],action) => {
     switch (action.type) {
         case 'ADD':
-            return [
-                ...state,
-                TodoReducer(undefined,action)
-            ]
-
-        case 'TOGGLE':
-            return state.map(t => 
-                TodoReducer(t,action)
-            )
-
-        default:
+            return state.concat(TodoReducer(undefined,action))
+        case 'TOGGLE': 
+            console.log(state.map(item=>TodoReducer(item,action)));
+            console.log(state);
+            return state.map(item=>TodoReducer(item,action))
+        default : 
             return state
     }
 }
+
+// const TodosReducer = (state=[],action) => {
+//     switch (action.type) {
+//         case 'ADD':
+//             return [
+//                 ...state,
+//                 TodoReducer(undefined,action)
+//             ]
+
+//         case 'TOGGLE':
+//             return state.map(t => 
+//                 TodoReducer(t,action)
+//             )
+
+//         default:
+//             return state
+//     }
+// }
 
 const SelectFilterReducer = (state='ALL',action) => {
     switch (action.type) {
@@ -65,6 +64,13 @@ const SelectFilterReducer = (state='ALL',action) => {
             return state
     }
 }
+
+/*
+{
+    TodosReducer: [], 
+    SelectFilterReducer: "ALL"    "ACTIVE"    "COMPLETED"
+}
+*/
 
 const TodoAppReducer = combineReducers({
     TodosReducer,

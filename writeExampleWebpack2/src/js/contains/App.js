@@ -2,7 +2,7 @@ import React from 'react'
 
 import AddTodo from './AddTodo'
 import Todos from './Todos'
-import SelectLink from './SelectLink'
+import Footer from '../components/Footer'
 
 class App extends React.Component {
     constructor (...args) {
@@ -12,7 +12,7 @@ class App extends React.Component {
         return <div>
                 <AddTodo />
                 <Todos />
-                <SelectLink />
+                <Footer />
             </div>
     }
 }
