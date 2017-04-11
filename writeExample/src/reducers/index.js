@@ -1,4 +1,4 @@
-
+import { combineReducers } from 'redux'
 //处理action行为
 const TodoReducer = (state,action) => {
     switch (action.type) {
@@ -24,20 +24,6 @@ const TodoReducer = (state,action) => {
         
 }
 
-// const TodosReducer = (state=[],action) => {
-//     switch (action.type) {
-//         case 'ADD':
-//             let addOne = TodoReducer(undefined,action)
-//             state = state.push(addOne)
-//             return state
-//         case 'TOGGLE': 
-//             state.map(item=>TodoReducer(item,action))
-//             return state
-//         default : 
-//             return state
-//     }
-// }
-
 const TodosReducer = (state=[],action) => {
     switch (action.type) {
         case 'ADD':
@@ -60,10 +46,14 @@ const SelectFilterReducer = (state='ALL',action) => {
     switch (action.type) {
         case 'SELECT':
             return action.filter
-            break
         default:
-            break
+            return state
     }
 }
 
-export default TodosReducer
+const appReducer = combineReducers ({
+    TodosReducer,
+    SelectFilterReducer
+})
+
+export default appReducer

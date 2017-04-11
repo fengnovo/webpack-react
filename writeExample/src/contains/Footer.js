@@ -1,26 +1,32 @@
 import Select from '../components/Select'
-import { SELECT } from '../actions'
+import { SELECTFILITER } from '../actions'
 import { dispatch } from 'redux'
 import { connect } from 'react-redux'
 
+/*
+{
+    TodosReducer,
+    SelectFilterReducer
+}
+*/
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state,ownProps) => {      //state才是那棵状态树
     return {
-        
+        active: state.SelectFilterReducer === ownProps.filter
     }
 }
 
 const mapDispatchToProps = (dispatch,ownProps) => {
     return {
         onclick: (tab)=> {
-            dispatch(SELECT(tab))
+            dispatch(SELECTFILITER(tab))
         }
     }
 }
 
-connect(
+const Footer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(SELECT)
+)(Select)
 
 export default Footer
