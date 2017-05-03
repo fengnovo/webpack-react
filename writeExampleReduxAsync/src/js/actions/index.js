@@ -1,30 +1,15 @@
-let id=0;
-
-export const ADD = text => {       //增加办事项
+const saveReducer = (data) => {
     return {
-        type: "ADD",
-        id: id++,
-        text: text
+        type: 'SAVE_REDUCER',
+        data
     }
 }
 
-export const TOGGLE = id => {      //切换办事项状态
-    return {
-        type: "TOGGLE",
-        id: id
-    }
-}
+export const getTest = (id) => (dispatch, getState) => {
+    fetch(`https://cnodejs.org/api/v1/topic/${id}`)
+        .then(response => response.json())
+        .then(json => {
+            dispatch(saveReducer(json))
+        })
 
-export const SELECTFILITER = filter => {      //查看办事项列表
-    return {
-        type: "SELECT",
-        filter: filter
-    }
 }
-
-/*
-{
-    TodosReducer: [], 
-    SelectFilterReducer: "ALL"    "ACTIVE"    "COMPLETED"
-}
-*/

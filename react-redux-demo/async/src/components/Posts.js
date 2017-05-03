@@ -1,5 +1,9 @@
 import React, { PropTypes } from 'react'
 
+/*
+<Posts posts={posts} />
+*/
+
 const Posts = ({posts}) => (
   <ul>
     {posts.map((post, i) =>

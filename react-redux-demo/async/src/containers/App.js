@@ -19,6 +19,7 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    //当组件的props改变时触发
     if (nextProps.selectedReddit !== this.props.selectedReddit) {
       const { dispatch, selectedReddit } = nextProps
       dispatch(fetchPostsIfNeeded(selectedReddit))
@@ -44,23 +45,23 @@ class App extends Component {
       <div>
         <Picker value={selectedReddit}
                 onChange={this.handleChange}
-                options={[ 'reactjs', 'frontend' ]} />
+                options={[ {a:'reactjs',t:'react框架'}, {a:'frontend',t:'前端'} ]} />
         <p>
           {lastUpdated &&
             <span>
-              Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
+              最后更新于 {new Date(lastUpdated).toLocaleTimeString()}.
               {' '}
             </span>
           }
           {!isFetching &&
             <a href="#"
                onClick={this.handleRefreshClick}>
-              Refresh
+              刷新
             </a>
           } 
         </p>
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
+          ? (isFetching ? <h2>加载中...</h2> : <h2>无数据.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
               <Posts posts={posts} />
             </div>

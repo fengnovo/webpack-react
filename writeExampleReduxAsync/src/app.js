@@ -1,28 +1,24 @@
 import React from 'react'
-import ReactDom from 'react-dom'
-import {createStore} from 'redux'
-import {Provider} from 'react-redux'
-import TodoAppReducer from './js/reducers'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
 
-import App from './js/contains/App'
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import { createLogger }  from 'redux-logger';
+import { reducers } from './js/reducers';
 
-import './css/font/fontawesome-webfont.eot'
-import './css/font/fontawesome-webfont.svg'
-import './css/font/fontawesome-webfont.ttf'
-import './css/font/fontawesome-webfont.woff'
-import './css/font/FontAwesome.otf'
-import './css/common.css'
+import App from './js/App'
 
-let store = createStore(TodoAppReducer,
-window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const logger = createLogger();
+const createStoreWithMiddleware = applyMiddleware(
+    thunkMiddleware,
+    logger
+)(createStore);
 
-store.subscribe(()=>{
-    // console.log(store.getState());
-})
+const store = createStoreWithMiddleware(reducers);
 
-ReactDom.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.getElementById('app')
-)
+ReactDOM.render(
+	<Provider store={store}>
+		<App />
+	</Provider>,
+document.getElementById('app'));

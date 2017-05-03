@@ -26,21 +26,27 @@ export const receivePosts = (reddit, json) => ({
 })
 
 const fetchPosts = reddit => dispatch => {
+  console.log('fetchPosts');
+  console.log('fetchPosts------1');
   dispatch(requestPosts(reddit))
   return fetch(`https://www.reddit.com/r/${reddit}.json`)
     .then(response => response.json())
-    .then(json => dispatch(receivePosts(reddit, json)))
+    .then(json => {
+      console.log('receivePosts------1');
+      dispatch(receivePosts(reddit, json));
+    })
 }
 
-const shouldFetchPosts = (state, reddit) => {
+const shouldFetchPosts = (state, reddit) => {   //判断要不要刷新
+  console.log('shouldFetchPosts');
   const posts = state.postsByReddit[reddit]
-  if (!posts) {
+  if (!posts) {                   //如果数据是空的，就返回true
     return true
   }
-  if (posts.isFetching) {
+  if (posts.isFetching) {         //如果正在刷新就返回false
     return false
   }
-  return posts.didInvalidate
+  return posts.didInvalidate    
 }
 /*{
   postsByReddit : {
@@ -53,6 +59,7 @@ const shouldFetchPosts = (state, reddit) => {
   selectedReddit : 'reactjs'
 }*/
 export const fetchPostsIfNeeded = reddit => (dispatch, getState) => {
+  console.log('fetchPostsIfNeeded');
   if (shouldFetchPosts(getState(), reddit)) {
     return dispatch(fetchPosts(reddit))
   }

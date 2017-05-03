@@ -10,8 +10,8 @@ const Picker = ({ value, onChange, options }) => (
     <select onChange={e => onChange(e.target.value)}
             value={value}>
       {options.map(option =>
-        <option value={option} key={option}>
-          {option}
+        <option value={option.a} key={option.a}>
+          {option.t}
         </option>)
       }
     </select>
@@ -20,7 +20,7 @@ const Picker = ({ value, onChange, options }) => (
 
 Picker.propTypes = {
   options: PropTypes.arrayOf(
-    PropTypes.string.isRequired
+    PropTypes.object.isRequired
   ).isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
