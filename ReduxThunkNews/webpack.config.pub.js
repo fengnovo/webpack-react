@@ -18,7 +18,7 @@ console.log('BUILD_PATH->'+BUILD_PATH);
 
 module.exports = {
 	entry:{
-		app:path.resolve(APP_PATH,'js/app.js')
+		app:path.resolve(APP_PATH,'app.js')
 	},
 	output:{
 		path: BUILD_PATH,

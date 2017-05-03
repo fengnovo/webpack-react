@@ -1,29 +1,32 @@
-*{
-    margin: 0;
-    padding: 0;
+body {
+	margin: 0;
+	padding: 0;
 }
 
-ul li {
-    list-style: none;
+.bottom-nav {
+	bottom: 0;
+    position: fixed;
+    width: 100%;
 }
 
-a {
-    text-decoration: none;
+.app-nav-bar{
+    position: fixed !important;
 }
 
-#app {
-    padding: .8rem;
-    .article{
-        width: 100%;
-        .title{
-            font-size: 1.2rem;
-        }
-        .time {
-            font-size: .8rem;
-        }
-        .content {
-            width: 100%;
-
-        }
-    }
+.nav-tab {
+    top: 64px;
+    width: 100%;
 }
+
+.app-nav-tab{
+    width: 100%;
+    top: 64px;
+    position: fixed;
+    z-index: 2;
+}
+
+.app-nav-list{
+    padding-top: 106px !important;
+}
+
+

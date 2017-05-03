@@ -36,7 +36,7 @@ console.log('BUILD_PATH->'+BUILD_PATH);
 
 module.exports = {
 	entry:{
-		app:path.resolve(APP_PATH,'js/app.js')
+		app:path.resolve(APP_PATH,'app.js')
 	},
 	output:{
 		path: BUILD_PATH,
@@ -51,6 +51,7 @@ module.exports = {
 	devServer:{
 		historyApiFallback:true,
 		hot:true,
+		host: '0.0.0.0',
 		inline:true,
 		proxy:{
 			'/api/*':{
@@ -67,7 +68,7 @@ module.exports = {
 	        include: APP_PATH,
 	        query: {
 	          //添加两个presents 使用这两种presets处理js或者jsx文件
-	          presets: ['react','es2015','stage-0','stage-1','stage-2','stage-3']
+	          presets: ['react','es2015','stage-0']
 	        }
 	      },
           {
@@ -75,13 +76,8 @@ module.exports = {
             include: APP_PATH,
             use: ExtractTextPlugin.extract({
                 fallbackLoader: 'style-loader',
-                loader: ['css-loader','sass-loader']
+                loader: ['css-loader', 'sass-loader']
             })
-          },
-          {
-            test: /\.(styl)$/,
-            include: APP_PATH,
-            loader: ['style-loader','css-loader','stylus-loader']
           },
             {
                 test: /\.(jpg|jpeg|png|gif)$/,

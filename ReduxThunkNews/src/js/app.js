@@ -1,66 +1,95 @@
-import React from 'react';
-import {render} from 'react-dom';
+import React, { Component } from 'react';
+import { bindActionCreators,dispatch } from 'redux';
+import { connect } from 'react-redux';
 
-import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
-import createLogger from 'redux-logger';
-import {AppContainer} from 'react-hot-loader';
 
-import weatherApp from './reducers';
-import App from './components/App';
+import AppBar from 'material-ui/AppBar';
+import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
+import {deepOrange500} from 'material-ui/styles/colors';
+import FlatButton from 'material-ui/FlatButton';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Drawer from 'material-ui/Drawer';
 
-// import './icons/css/weather-icons.css';
+import BottomNavigations from './components/BottomNavigations';
+import TabsSwipeable from './components/TabsSwipeable';
+import Lists from './components/Lists';
 
-require('onsenui/css-components-src/src/onsen-css-components.css');
-require('onsenui/css/onsenui.css');
 
-import ons from 'onsenui';
-// import 'onsenui/css/onsenui.css';
-// import './stylus/index.styl';
 
-const logger = createLogger();
+import { GETDATA } from './actions';
 
-const store = createStore(weatherApp,
-  window.devToolsExtension ? window.devToolsExtension() : f => f,
-  process.env.NODE_ENV === 'production'
-    ? applyMiddleware(thunk)
-    : applyMiddleware(thunk, logger)
-);
+const muiTheme = getMuiTheme({
+  palette: {
+    accent1Color: deepOrange500,
+  },
+});
 
-import {addLocationAndFetchWeather} from './actions';
 
-[
-  'Tokyo',
-  'New York',
-  'London',
-  'Beijing',
-  'Sydney',
-  'Rio de Janeiro',
-  'Istanbul'
-].forEach((city) => store.dispatch(addLocationAndFetchWeather(city)));
+class App extends Component {
+  constructor(props, context) {
+    super(props, context);
+    console.log(this.props);
 
-const rootElement = document.getElementById('app');
+    this.handleHide = this.handleHide.bind(this);
+    this.toggleDrawer = this.toggleDrawer.bind(this)
 
-ons.ready(() => render(
-  <AppContainer>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </AppContainer>,
-  rootElement
-));
+    this.state = {
+        openDrawer: false
+    };
+  }
 
-// if (module.hot) {
-//   module.hot.accept('./components/App', () => {
-//     const NextApp = require('./components/App').default;
-//     render(
-//       <AppContainer>
-//         <Provider store={store}>
-//           <NextApp />
-//         </Provider>
-//       </AppContainer>,
-//       rootElement
-//     );
-//   });
-// }
+
+  componentDidMount () {
+    this.props.GETDATA();
+  }
+  
+
+  handleHide () {
+    this.setState({
+        openDrawer: false
+    })
+  }
+
+  toggleDrawer () {
+    console.log('触发toggleDrawer');
+    this.setState({
+        openDrawer: !this.state.openDrawer
+    })
+  }
+
+/*{   
+    DATA: {fetchData: []},
+    SELECT: ''
+}*/
+
+  render() {
+    return (
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div>
+                <AppBar className='app-nav-bar'
+                    title='CNODE' 
+                    onLeftIconButtonTouchTap={this.toggleDrawer} 
+                    onRightIconButtonTouchTap={this.handleHide}
+                    onTitleTouchTap={this.handleHide}
+                  />
+                <div className=''>
+                      <Drawer toggleDrawer={this.toggleDrawer}
+                            docked={this.state.openDrawer}
+                            onRequestChange={this.handleHide}
+                        > <Lists />
+                        </Drawer>
+                      <TabsSwipeable fetchData={this.props.DATA.fetchData}/>
+                </div>
+                <BottomNavigations />
+        </div>
+      </MuiThemeProvider>
+    );
+  }
+}
+
+export default connect(
+    state => state,
+    dispatch => bindActionCreators({GETDATA}, dispatch)
+)(App)
