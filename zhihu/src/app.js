@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import ReactDOM from 'react-dom';
 import {
 	BrowserRouter as Router,
@@ -33,4 +33,6 @@ const Child = ({ match }) => (
 )
 
 
-ReactDOM.render(<App/>, document.getElementById('app'))
+ReactDOM.render(<App/>, document.getElementById('app'))*/
+
+import './js/TodoList'
