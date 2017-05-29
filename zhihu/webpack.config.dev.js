@@ -52,12 +52,13 @@ module.exports = {
 		historyApiFallback:true,
 		hot:true,
 		inline:true,
-		proxy:{
-			'/api/*':{
-				target:'http://localhost:8080',
-				secure:false
-			}
-		}
+		host: '0.0.0.0'
+		// proxy:{
+		// 	'/api/*':{
+		// 		target:'http://localhost:8080',
+		// 		secure:false
+		// 	}
+		// }
 	},
 	module:{
 		loaders: [
@@ -98,6 +99,10 @@ module.exports = {
 	    ]
 	},
     plugins: [
+		// new webpack.ProvidePlugin({
+        //   $: "jquery",
+        //   jQuery: "jquery"
+      	// }),
 	    new HtmlwebpackPlugin({
 	      title: 'react-ele-webapp',
 	      template: path.resolve(ROOT_PATH, 'index.html'),
