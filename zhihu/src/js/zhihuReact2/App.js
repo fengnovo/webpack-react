@@ -20,6 +20,8 @@ class App extends Component {
 		this.isCalling = false;
 		this.date = 20170520;
 		this.tabId = '';
+		this.cacheData={};	//做数据缓存
+		this.scrollH = 0;
 
 		this.state = {
 			themes: [],
@@ -56,6 +58,7 @@ class App extends Component {
 					stories: data.stories
 				})
 				this.s();
+				this.props.updateData('data',data);
 				setTimeout(() => {
 					this.isCalling = false;
 				},300);
@@ -101,6 +104,8 @@ class App extends Component {
 					loading: false,
 					stories: arr
 				})
+				console.log(this.props.cacheData);
+				this.props.pushData('stories',arr.slice());	//clone一份存储
 				setTimeout(() => {
 					this.isCalling = false;
 				},300);
@@ -126,6 +131,11 @@ class App extends Component {
 					loading: false,
 					stories: data.stories
 				})
+				this.props.updateData('stories',data.stories);	//clone一份存储
+				console.log({
+					loading: false,
+					stories: data.stories
+				});
 				this.uns();
 			})
 			.catch(e=>{
@@ -141,7 +151,8 @@ class App extends Component {
 		$(document).unbind('scroll').on('scroll', ()=>{
 			var top = document.documentElement.scrollTop||document.body.scrollTop;
 			if(!this.isCalling){
-				// console.log(top + 415)
+				console.log(top + 415)
+				this.scrollH = top + 415
 				// console.log($('#container').height());
 				if((top + 390)> $('#container').height()){ 
 					this.setState({
@@ -175,6 +186,10 @@ class App extends Component {
 	}
 
     componentDidMount() {
+		debugger
+		var dsfkjsdlk = this.props.cacheData;
+		console.log(dsfkjsdlk);
+		console.log(dsfkjsdlk.data);
 		$(() => {
 			$('.button-collapse').sideNav({
 			      menuWidth: 300, 
@@ -183,12 +198,34 @@ class App extends Component {
 			      draggable: true 		// Choose whether you can drag to open on touch screens
 			    }
 			  );
-			this.init();
+			if(!this.props.cacheData.data){	//如果没有缓存数据就请求后台
+				this.init();
+			}else{
+				let data = this.props.cacheData.data;
+				console.log(data);
+				
+				this.date = data.date;
+				this.setState({
+					loading: false,
+					top_stories: data.top_stories,
+					stories: data.stories
+				})
+				this.s();
+				setTimeout(() => {
+					if(this.props.cacheData.scrollH){
+						$('html,body').animate({ scrollTop: this.props.cacheData.scrollH}, 0);
+					}
+					this.isCalling = false;
+				},300);
+			}
 			this.getThemesData();
 		})
     }
 
 	componentWillUnmount (){
+		debugger
+		alert('2');
+		this.props.updateData('scrollH',this.scrollH)
 		this.uns();
 	}
 

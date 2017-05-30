@@ -1,19 +1,27 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import App from './containers/App'
-import todoApp from './reducers'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-let store = createStore(
-  todoApp,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
+import { Provider } from 'react-redux'
+import configureStore from './store/configureStore'
+
+import App from './containers/App'
+import Detail from './containers/Detail'
+import Comment from './containers/Comment'
+
+let store = configureStore();
 
 let rootElement = document.getElementById('app')
+
 render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  rootElement
+    <Provider store={store}>
+        <Router>
+            <div>
+                <Route exact path="/" component={App} />
+                <Route path="/detail/:id" component={Detail} />
+                <Route path="/comment/:id" component={Comment} />
+            </div>
+        </Router> 
+    </Provider>,
+    rootElement
 )

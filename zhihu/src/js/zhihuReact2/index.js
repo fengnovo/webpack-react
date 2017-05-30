@@ -8,12 +8,16 @@ import Comment from './Comment'
 
 
 
-let rootElement = document.getElementById('app')
+var rootElement = document.getElementById('app')
+
 
 render(
     <Router>
         <div>
-            <Route exact path="/" component={App} />
+            <Route exact path="/" render={() => {
+                console.log(cacheData);
+                return <App cacheData={cacheData} updateData={updateData} pushData={pushData}/>}
+            } />
             <Route path="/detail/:id" component={Detail} />
             <Route path="/comment/:id" component={Comment} />
         </div>
