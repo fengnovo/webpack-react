@@ -15,7 +15,12 @@ import {
   START_CALLING,
   STOP_CALLING,
   HANDLE_DATE,
-  HANDLE_TAB
+  HANDLE_TAB,
+
+  REQUEST_COMMENT_DATA,
+  RECEIVE_COMMENT_DATA,
+
+  RECEIVE_DETAIL_DATA
 
 } from '../actions'
 
@@ -98,6 +103,32 @@ function tabId(state = '', action) {
 }
 
 
+function comments(state = {comments:[],leng:0}, action) {
+  switch (action.type) {
+    case RECEIVE_COMMENT_DATA:
+      return {
+          leng: action.leng,
+		      comments:action.comments
+      }
+    default:
+      return state
+  }
+}
+
+function detail(state = {loading: true,content: ''}, action) {
+  switch (action.type) {
+    case RECEIVE_DETAIL_DATA:
+      return {
+          loading: action.loading,
+          content: action.content
+      }
+    default:
+      return state
+  }
+}
+
+
+
 
 
 const rootReducer = combineReducers({
@@ -107,7 +138,9 @@ const rootReducer = combineReducers({
   loading,
   calling,
   date,
-  tabId
+  tabId,
+  detail,
+  comments
 })
 
 export default rootReducer

@@ -134,47 +134,27 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-			themes: state.themes,
-			top_stories: state.top_stories,
-			stories: state.stories,
-			loading: state.loading,
-			calling: state.calling,
-			date: state.date,
-			tabId: state.tabId,
-		});
+const mapStateToProps = state => ({
+	themes: state.themes,
+	top_stories: state.top_stories,
+	stories: state.stories,
+	loading: state.loading,
+	calling: state.calling,
+	date: state.date,
+	tabId: state.tabId,
+});
 
 const mapDispatchToProps = dispatch => ({
-    getThemesData: () => {
-		dispatch(getThemesData())
-	},
-	getHomeData: (cb) => {
-		dispatch(getHomeData(cb))
-	},
-	getTabData: (tabId) => {		
-		dispatch(getTabData(tabId))
-	},
-	getNextData: (date) => {		
-		dispatch(getNextData(date))
-	},
-	showLoading: () => {
-		dispatch(showLoading())
-	},
-	hideLoading: () => {
-		dispatch(hideLoading())
-	},
-	startCalling: () => {
-		dispatch(startCalling())
-	},
-	stopCalling: () => {
-		dispatch(stopCalling())
-	},
-	handleDate: (date) => {
-		dispatch(handleDate(date))
-	},
-	handleTab: (tabId) => {
-		dispatch(handleTab(tabId))
-	},
+    getThemesData: () => dispatch(getThemesData()),
+	getHomeData: (cb) => dispatch(getHomeData(cb)),
+	getTabData: (tabId) => dispatch(getTabData(tabId)),
+	getNextData: (date) => dispatch(getNextData(date)),
+	showLoading: () => dispatch(showLoading()),
+	hideLoading: () => dispatch(hideLoading()),
+	startCalling: () => dispatch(startCalling()),
+	stopCalling: () => dispatch(stopCalling()),
+	handleDate: (date) => dispatch(handleDate(date)),
+	handleTab: (tabId) => dispatch(handleTab(tabId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

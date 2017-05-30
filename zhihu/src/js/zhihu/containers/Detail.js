@@ -1,6 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
 import {imgUrl} from '../util'
 import Loading from '../components/Loading'
+import {getDetailData} from '../actions'
 
 class Detail extends React.Component {
     constructor (props) {
@@ -10,10 +13,6 @@ class Detail extends React.Component {
            this.articleId = this.props.match.params.id; 
         }
 
-        this.state = {
-            loading: true,
-            content: ''
-        }
 
         this.back = this.back.bind(this)
         this.share = this.share.bind(this)
@@ -45,39 +44,7 @@ class Detail extends React.Component {
 
     componentDidMount (){
         $(() => {
-            fetch(`http://111.230.139.105/api/zhihu/news/${this.articleId}`)
-                .then(res=>{
-                    return res.json()
-                })
-                .then(data=>{
-                    console.log(data);
-                    if(data.css){
-                        $('<link type="text/css" rel="stylesheet" href='+data.css+' />').appendTo('head'); 
-                    }
-                    var _html = '';
-                    if(data.image){
-                        _html += '<div class="banner" style="background-image:url('+imgUrl(data.image)+')">'
-                                +'<span class="title">'+data.title+'</span>'
-                                +'</div>';
-                    }
-                    _html += '<div>'+data.body+'</div>';
-                    this.setState({
-                        content: _html,
-                        loading: false
-                    })
-                    setTimeout(()=>{
-                        $('.img-place-holder').remove();
-                        $('#detail-content img').map(function(i,item){
-                            // console.log(item)
-                            var x = imgUrl($(item).attr('src'));
-                            $(item).attr('src',x);
-                        });
-                         
-                    },300)
-                })
-                .catch(e=>{
-                    new Error(e)
-                })
+            this.props.getDetailData(this.articleId)
         })
     }
 
@@ -99,9 +66,21 @@ class Detail extends React.Component {
 					</div>
 				</nav>
 			</div>
-			{this.state.loading ? <div className="detail-loading"><Loading /></div> : <div id="detail-content" dangerouslySetInnerHTML={{__html: this.state.content}}></div>} 
+			{this.props.loading ? <div className="detail-loading"><Loading /></div> : <div id="detail-content" dangerouslySetInnerHTML={{__html: this.props.content}}></div>} 
 		</div>
     }
 }
+
+const mapStateToProps = state => ({
+    loading: state.detail.loading,
+    content: state.detail.content
+})
+
+const mapDispatchToProps = dispatch => ({
+    getDetailData: articleId => dispatch(getDetailData(articleId))
+    
+})
+
+Detail = connect(mapStateToProps,mapDispatchToProps)(Detail)
 
 export default Detail

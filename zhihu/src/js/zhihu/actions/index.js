@@ -1,5 +1,6 @@
 import 'es6-promise'
 import fetch from 'isomorphic-fetch'
+import {imgUrl} from '../util'
 
 export const REQUEST_THEMES_DATA = 'REQUEST_THEMES_DATA'   
 export const RECEIVE_THEMES_DATA = 'RECEIVE_THEMES_DATA'   
@@ -18,6 +19,12 @@ export const STOP_CALLING = 'STOP_CALLING'
 export const HANDLE_DATE = 'HANDLE_DATE'
 export const HANDLE_TAB = 'HANDLE_TAB'
 
+
+export const REQUEST_COMMENT_DATA = 'REQUEST_COMMENT_DATA'
+export const RECEIVE_COMMENT_DATA = 'RECEIVE_COMMENT_DATA'
+
+export const REQUEST_DETAIL_DATA = 'REQUEST_DETAIL_DATA'
+export const RECEIVE_DETAIL_DATA = 'RECEIVE_DETAIL_DATA'
 
 //侧滑栏数据
 function requestGetThemesData() {               //发起请求
@@ -214,3 +221,88 @@ export function handleTab(tabId) {
     tabId
   }
 }
+
+
+
+//评论列表数据
+function requestCommentData() {               //发起请求
+  return {
+    type: REQUEST_COMMENT_DATA
+  }
+}
+
+function receiveCommentData(data) {    //接受到请求结果
+  return {
+    type: RECEIVE_COMMENT_DATA,
+    comments: data.comments,
+		leng: data.comments && data.comments.length
+  }
+}
+
+export function getCommentData(articleId) {            //将上面两个请求动作连接
+    return dispatch => {
+        dispatch(requestCommentData())
+        fetch(`http://111.230.139.105/api/zhihu/story/${articleId}/short-comments`)
+          .then(res=>{
+            return res.json()
+          })
+          .then(data=>{
+            dispatch(receiveCommentData(data))
+          })
+    }
+}
+
+//正文详情数据
+function requestDetailData() {        
+  return {
+    type: REQUEST_DETAIL_DATA,
+    loading: true,               //此loading非上面首页loading，只是用于action
+    content: ''
+  }
+}
+function receiveDetailData(data) {    //接受到请求结果
+  return {
+    type: RECEIVE_DETAIL_DATA,
+    loading: false,
+		content: data.content
+  }
+}
+
+export function getDetailData(articleId) {            //将上面两个请求动作连接
+    return dispatch => {
+        dispatch(requestDetailData())
+        fetch(`http://111.230.139.105/api/zhihu/news/${articleId}`)
+                .then(res=>{
+                    return res.json()
+                })
+                .then(data=>{
+                    // console.log(data);
+                    if(data.css){
+                        $('<link type="text/css" rel="stylesheet" href='+data.css+' />').appendTo('head'); 
+                    }
+                    var _html = '';
+                    if(data.image){
+                        _html += '<div class="banner" style="background-image:url('+imgUrl(data.image)+')">'
+                                +'<span class="title">'+data.title+'</span>'
+                                +'</div>';
+                    }
+                    _html += '<div>'+data.body+'</div>';
+                    dispatch(receiveDetailData({
+                        content: _html
+                    }))
+                    setTimeout(()=>{
+                        $('.img-place-holder').remove();
+                        $('#detail-content img').map(function(i,item){
+                            // console.log(item)
+                            var x = imgUrl($(item).attr('src'));
+                            $(item).attr('src',x);
+                        });
+                         
+                    },300)
+                })
+                .catch(e=>{
+                    new Error(e)
+                })
+    }
+}
+

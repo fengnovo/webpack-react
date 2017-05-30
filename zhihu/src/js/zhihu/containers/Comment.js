@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { connect } from 'react-redux'
+
 import 'es6-promise'
 import fetch from 'isomorphic-fetch'
 import {imgUrl, changeTime} from '../util'
+
+import {getCommentData} from '../actions'
 
 
 class Comment extends Component {
@@ -14,10 +18,6 @@ class Comment extends Component {
         if(this.props.match && this.props.match.params && this.props.match.params.id){
            this.articleId = this.props.match.params.id; 
         }
-		this.state = {
-			leng: 0,
-			comments: []
-		}
 
 		this.handleClick = this.handleClick.bind(this)
     }
@@ -28,24 +28,12 @@ class Comment extends Component {
 	
     componentDidMount() {
 		$(() => {
-			console.log(location.search.slice(4));
-
-			fetch(`http://111.230.139.105/api/zhihu/story/${this.articleId}/short-comments`)
-				.then(res=>{
-					return res.json()
-				})
-				.then(data=>{
-					var comments = data.comments;
-					this.setState({
-						comments: comments,
-						leng: comments && comments.length
-					})
-				})
+			this.props.getCommentData(this.articleId)
 		})
     }
 
 	renderComment(){
-		let comments = this.state.comments;
+		let comments = this.props.comments;
         return comments.map((item,i) => <li className="p-5 waves-effect" key={i}>
 									<img src={imgUrl(item.avatar)} alt={item.author} />
 									<div className="m-l-7">
@@ -66,7 +54,7 @@ class Comment extends Component {
 						<ul className="left">
 							<li><a className="waves-effect waves-light" onClick={this.handleClick}><i className="material-icons">arrow_back</i></a></li>
 						</ul>
-						<a href="#!" className="left-align"><span id="commentLength">{this.state.leng}</span>条短评论</a>
+						<a href="#!" className="left-align"><span id="commentLength">{this.props.leng}</span>条短评论</a>
 						<ul className="right">
 							<li><a className="waves-effect waves-light"><i className="material-icons">border_color</i></a></li>
 						</ul>
@@ -81,5 +69,18 @@ class Comment extends Component {
       );
     }
 }
+
+const mapStateToProps = state => ({
+	leng: state.comments.leng,
+	comments: state.comments.comments
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	getCommentData: (articleId) =>{
+		dispatch(getCommentData(articleId))
+	} 
+})
+
+Comment = connect(mapStateToProps,mapDispatchToProps)(Comment)
 
 export default Comment
