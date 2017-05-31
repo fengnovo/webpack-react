@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, maximum-scale=1, minimum-scale=1, initial-scale=1, user-scalable=no">
+	<title>nginx test</title>
+	<script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<style>
+		html,body,ul{
+			margin: 0;
+			padding: 0;
+		}
+		ul,li {
+			list-style: none;
+		}
+		ul{
+			height: 100%;
+		}
+		a {
+			text-decoration: none;
+		}
+		html{
+			height: 100%;
+		}
+		#container {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+		}
+		#app {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<ul id="app">
+			
+		</ul>
+	</div>
+	<script>
+		$(function(){
+			var date = 20170520,isCalling=false;
+			function s(){
+				// $("#app").on('scroll',function(e){
+				// 	console.log(e)
+			 //         var $this =$(this),
+			 //         viewH =$(this).height(),//可见高度
+			 //         contentH =$(this).get(0).scrollHeight,//内容高度
+			 //         scrollTop =$(this).scrollTop();//滚动高度
+			 //        //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
+			 //        if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
+			 //        // 这里加载数据..
+			 //        	console.log('00')
+			 //        }
+			 //     });
+			  $(window).unbind('scroll').bind('scroll',function(){  
+			        //下面这句主要是获取网页的总高度，主要是考虑兼容性所以把Ie支持的documentElement也写了，这个方法至少支持IE8  
+			        var htmlHeight=document.body.scrollHeight||document.documentElement.scrollHeight;  
+			        //clientHeight是网页在浏览器中的可视高度，  
+			        var clientHeight=document.body.clientHeight||document.documentElement.clientHeight;  
+			        //scrollTop是浏览器滚动条的top位置，  
+			        var scrollTop=document.body.scrollTop||document.documentElement.scrollTop;  
+			        //通过判断滚动条的top位置与可视网页之和与整个网页的高度是否相等来决定是否加载内容；  
+			        if(scrollTop+clientHeight==htmlHeight){  
+			             console.log('00'); 
+			             if(!isCalling){
+			             	date -= 1;
+			             	callAjax();
+			             } 
+			             
+			        }  
+			    })  
+			}
+
+			function callAjax(){
+				isCalling = true;
+				$.ajax({
+					url:'http://139.199.79.18/api/zhihu/before/'+date,
+					success: function(data){
+						console.log(data)
+						var li = '';
+						data.stories.forEach(function(item){
+							li +=  ('<li><a href="./detail.html?id='+item.id+'">'+'<img src='+item.images[0]+' alt=""/>'+item.title+'</a></li>')
+						})
+						$('#app').append(li);
+						isCalling = false;
+						s();
+					},
+					error: function(data){
+						console.log(data)
+					}
+				})
+			}
+			callAjax();
+			
+		})
+	</script>
+</body>
+</html>
