@@ -8,9 +8,7 @@ import { Route, IndexRoute, Router, hashHistory, browserHistory } from 'react-ro
 import { applyMiddleware, createStore, compose } from 'redux';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
-
-import Home from './Home.js'
-import Detail from './Detail.js'
+import routes from './routes'
 
 import reducers from './reducers';
 
@@ -22,16 +20,10 @@ const enhancer = compose(
 const store = createStore(reducers,enhancer)
 
 
-const App = ({children}) => <div id="container">{children} </div>
 
 render(
     <Provider store={store}>
-        <Router history={browserHistory}>
-            <Route path='/' component={App}>
-                <IndexRoute component={Home}/>
-                <Route path='/detail/:id' component={Detail}/>
-            </Route>
-        </Router>
+        <Router routes={routes} history={browserHistory}/>
     </Provider>,
     document.getElementById('root')
 )

@@ -24,6 +24,7 @@ module.exports = {
                 secure: false
             }
         },
+        port: 8880
         // hot: true,
         // inline: true
     },

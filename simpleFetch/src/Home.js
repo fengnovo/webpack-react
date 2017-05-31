@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { fetchHomeData, fetchNextData, fetchingNextData } from './actions'
+import { Link } from 'react-router';
+import { fetchHomeData, fetchNextData, fetchingNextData,fetchDetailData } from './actions'
 
 let date =  20170530
 
@@ -9,6 +10,7 @@ class Home extends React.Component {
     constructor (props) {
         super(props)
         this.s = this.s.bind(this)
+        this.handleClick  = this.handleClick.bind(this)
     }
 
     s(){
@@ -25,14 +27,34 @@ class Home extends React.Component {
     }
 
     componentDidMount () {
-         this.props.fetchHomeData(this.s)
+        if(this.props.stories.length === 0 ){
+            this.props.fetchHomeData(this.s)
+        }else{
+            setTimeout(()=>{
+                this.s()
+            },300)
+        }
+         
     }
+
+    handleClick (id){
+        this.props.fetchDetailData(id)
+    }
+
+    componentWillUnmount (){
+        window.onscroll = null;
+    }
+
     render () {
         return (
             <ul>
-                {this.props.stories.map((item,i) => (<li key={i}><a href={'/detail/'+item.id}>
+                {this.props.stories.map((item,i) => (
+                    <li key={i}>
+                    <Link to={ '/detail/'+item.id}  onClick={this.handleClick.bind(this,item.id) }>
                     <img src="https://pic2.zhimg.com/v2-f58195f92182582e6acf68a152e01201.jpg" alt="" />
-                    {item.title}</a></li>) )}
+                    {item.title}
+                     </Link>
+                    </li>) )}
                 
             </ul>
         )
@@ -48,6 +70,7 @@ const mapDispatchToProps = dispatch => ({
     fetchHomeData:(cb) => dispatch(fetchHomeData(cb)),
     fetchNextData:(date) => dispatch(fetchNextData(date)),
     fetchingNextData:(loading) => dispatch(fetchingNextData(loading)),
+    fetchDetailData:(articleId) => dispatch(fetchDetailData(articleId))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(Home)
