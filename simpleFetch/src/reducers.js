@@ -8,9 +8,12 @@ import {
     FETCH_NEXT_DATA_REQ,
     FETCH_NEXT_DATA_RES,
     FETCHING_NEXT_DATA,
+    MARK_SCROLL_Y,
+    FETCH_COMMENT_DATA_REQ,
+    FETCH_COMMENT_DATA_RES,
 } from './actions'
 
-let home = (state={stories:[]},action) => {
+let home = (state={stories:[],pos:0,loading:false},action) => {
     switch (action.type) {
         case FETCH_HOME_DATA_RES:
             return {
@@ -27,6 +30,11 @@ let home = (state={stories:[]},action) => {
             return {
                 ...state,
                 loading: action.loading
+            }
+        case MARK_SCROLL_Y:
+            return {
+                ...state,
+                pos: action.pos
             }
         default:
             return state
@@ -46,8 +54,21 @@ let detail = (state={content:''},action) => {
     } 
 }
 
+let comment = (state={comments: [],leng: 0},action) => {
+    switch (action.type) {
+        case FETCH_COMMENT_DATA_RES:
+            return {
+                comments: action.comments,
+                leng: action.leng
+            }
+        default:
+            return state
+    } 
+}
+
 
 export default combineReducers({
     home,
-    detail
+    detail,
+    comment
 })

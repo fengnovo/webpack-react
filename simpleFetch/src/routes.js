@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Route, IndexRoute, Router, hashHistory, browserHistory } from 'react-router';
 
 
-import Home from './Home.js'
-import Detail from './Detail.js'
+import Home from './Home'
+import Detail from './Detail'
+import Comment from './Comment'
 
 
 class App extends Component {
@@ -34,5 +35,6 @@ let routes = (
 		<Route path='/' component={App}>
                 <IndexRoute component={Home}/>
                 <Route path='detail/:id' component={Detail}/>
+                <Route path='comment/:id' component={Comment}/>
         </Route>)
 export default routes;

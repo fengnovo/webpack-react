@@ -7,6 +7,15 @@ export const FETCH_DETAIL_DATA_RES = 'FETCH_DETAIL_DATA_RES'
 export const FETCH_NEXT_DATA_REQ = 'FETCH_NEXT_DATA_REQ'
 export const FETCH_NEXT_DATA_RES = 'FETCH_NEXT_DATA_RES'
 export const FETCHING_NEXT_DATA = 'FETCHING_NEXT_DATA'
+export const MARK_SCROLL_Y = 'MARK_SCROLL_Y'
+export const FETCH_COMMENT_DATA_REQ = 'FETCH_COMMENT_DATA_REQ'
+export const FETCH_COMMENT_DATA_RES = 'FETCH_COMMENT_DATA_RES'
+
+export let markScrollY = pos => ({
+    type: MARK_SCROLL_Y, //markScrollY
+    pos
+})
+
 
 let fetchHomeDataReq = () => ({
     type: FETCH_HOME_DATA_REQ
@@ -63,7 +72,7 @@ export let fetchHomeData = (cb) => {
 export let fetchDetailData = articleId => {
     return dispatch => {
         dispatch(fetchDetailDataReq())
-        fetch( `http://139.199.79.18/api/zhihu/${articleId}`)
+        fetch( `http://111.230.139.105/api/zhihu/news/${articleId}`)
             .then(res=>res.json())
             .then(data=>{
                 dispatch(fetchDetailDataRes(data))
@@ -77,7 +86,7 @@ export let fetchDetailData = articleId => {
 export let fetchNextData = date => {
     return dispatch => {
         dispatch(fetchNextlDataReq())
-        fetch(`http://139.199.79.18/api/zhihu/before/${date}`)
+        fetch(`http://111.230.139.105/api/zhihu/news/before/${date}`)
                 .then(res=>{
                 return res.json();
                 })
@@ -90,3 +99,33 @@ export let fetchNextData = date => {
                 })
     }
 }
+
+//评论列表数据
+function requestCommentData() {               //发起请求
+  return {
+    type: FETCH_COMMENT_DATA_REQ
+  }
+}
+
+function receiveCommentData(data) {    //接受到请求结果
+  return {
+    type: FETCH_COMMENT_DATA_RES,
+    comments: data.comments,
+	leng: data.comments && data.comments.length
+  }
+}
+
+export function fetchCommentData(articleId) {            //将上面两个请求动作连接
+    return dispatch => {
+        dispatch(requestCommentData())
+        fetch(`http://111.230.139.105/api/zhihu/story/${articleId}/short-comments`)
+          .then(res=>{
+            return res.json()
+          })
+          .then(data=>{
+            dispatch(receiveCommentData(data))
+          })
+    }
+}
+
+

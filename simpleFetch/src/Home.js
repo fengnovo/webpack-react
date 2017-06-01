@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Link } from 'react-router';
-import { fetchHomeData, fetchNextData, fetchingNextData,fetchDetailData } from './actions'
+import { Link } from 'react-router'
+import { fetchHomeData, fetchNextData, fetchingNextData,fetchDetailData, markScrollY } from './actions'
 
 let date =  20170530
 
@@ -30,9 +30,13 @@ class Home extends React.Component {
         if(this.props.stories.length === 0 ){
             this.props.fetchHomeData(this.s)
         }else{
-            setTimeout(()=>{
+            // setTimeout(()=>{
+                console.log(this.props.route.component.displayName)
+                if(this.props.route.component.displayName == "Connect(Home)"){
+                    window.scrollTo(0,this.props.pos);
+                }
                 this.s()
-            },300)
+            // },300)
         }
          
     }
@@ -42,6 +46,7 @@ class Home extends React.Component {
     }
 
     componentWillUnmount (){
+        this.props.markScrollY(window.pageYOffset);
         window.onscroll = null;
     }
 
@@ -63,14 +68,16 @@ class Home extends React.Component {
 
 const mapStateToProps = state => ({
     stories: state.home.stories,
-    loading: state.home.loading
+    loading: state.home.loading,
+    pos:state.home.pos,
 })
 
 const mapDispatchToProps = dispatch => ({
     fetchHomeData:(cb) => dispatch(fetchHomeData(cb)),
     fetchNextData:(date) => dispatch(fetchNextData(date)),
     fetchingNextData:(loading) => dispatch(fetchingNextData(loading)),
-    fetchDetailData:(articleId) => dispatch(fetchDetailData(articleId))
+    fetchDetailData:(articleId) => dispatch(fetchDetailData(articleId)),
+    markScrollY:(pos) => dispatch(markScrollY(pos)),
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(Home)
