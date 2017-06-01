@@ -123,13 +123,14 @@ function receiveNextData(data) {
 
 export function getNextData(date) {   
     return dispatch => {
-        dispatch(requestTabData())
+        dispatch(requestNextData())
         fetch('http://111.230.139.105/api/zhihu/news/before/' + date)
           .then(res=>{
             return res.json();
           })
           .then(data=>{
             dispatch(receiveNextData(data))
+            dispatch(stopCalling())
           })
           .catch(e=>{
             new Error(e)
@@ -278,7 +279,8 @@ export function getDetailData(articleId) {            //将上面两个请求动
                 .then(data=>{
                     // console.log(data);
                     if(data.css){
-                        $('<link type="text/css" rel="stylesheet" href='+data.css+' />').appendTo('head'); 
+                        $('#cssKey').remove();
+                        $('<link id="cssKey" type="text/css" rel="stylesheet" href='+data.css+' />').appendTo('head'); 
                     }
                     var _html = '';
                     if(data.image){

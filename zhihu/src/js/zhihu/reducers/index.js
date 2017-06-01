@@ -128,10 +128,7 @@ function detail(state = {loading: true,content: ''}, action) {
 }
 
 
-
-
-
-const rootReducer = combineReducers({
+const home = combineReducers({
   themes,
   top_stories,
   stories,
@@ -139,6 +136,11 @@ const rootReducer = combineReducers({
   calling,
   date,
   tabId,
+})
+
+
+const rootReducer = combineReducers({
+  home,
   detail,
   comments
 })

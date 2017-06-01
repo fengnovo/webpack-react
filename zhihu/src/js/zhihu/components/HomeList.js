@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
+import {Link} from 'react-router-dom'
 import Loading from './Loading'
 import {imgUrl} from '../util'
 
 class HomeList extends Component {
     static propTypes = {
         stories: PropTypes.array,
-        loading: PropTypes.bool
+        loading: PropTypes.bool,
+        getDetailData: PropTypes.func
     }
 
     constructor(props) {
@@ -14,22 +17,24 @@ class HomeList extends Component {
         this.renderStories = this.renderStories.bind(this)
     }
 
+
+
     renderStories () {
         let stories = this.props.stories;
 
         return stories.map((item,i) => {
             if(item.images && item.images.length>0){
                 return  <li className="p-5 waves-effect c-radius z-depth-1" key={i}>
-                                            <a href={"/detail/"+item.id}>
+                                            <Link to={"/detail/"+item.id} onClick={this.props.getDetailData.bind(this,item.id)}>
                                                 <p className="m-r-1">{item.title}</p>
                                                 <img src={imgUrl(item.images[0])} alt={item.title} />
-                                            </a>
+                                            </Link>
                                         </li>
             }else{
                 return  <li className="p-5 waves-effect c-radius z-depth-1" key={i}>
-                                            <a href={"/detail/"+item.id}>
+                                            <Link to={"/detail/"+item.id} onClick={this.props.getDetailData.bind(this,item.id)}>
                                                 <p style={{ 'margin': 0,'width': '100%'}}>{item.title}</p>
-                                            </a>
+                                            </Link>
                                         </li>
             }
         })

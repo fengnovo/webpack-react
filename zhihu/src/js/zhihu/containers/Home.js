@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { getThemesData, getHomeData,getTabData,getNextData,
-showLoading, hideLoading,startCalling,stopCalling,
+showLoading, hideLoading,startCalling,stopCalling,	getDetailData,
 handleDate,handleTab } from '../actions'
 
 import 'es6-promise'
@@ -17,7 +17,7 @@ import HomeList from '../components/HomeList'
 
 
 
-class App extends Component {
+class Home extends Component {
 
     constructor(props) {
         super(props);
@@ -29,29 +29,28 @@ class App extends Component {
 		this.openLoginModal = this.openLoginModal.bind(this)
     }
 
+	s() {
+		var banner = document.getElementById('banner');    
+		var height = banner.offsetHeight;
+		$(document).unbind('scroll').on('scroll', ()=>{
+			var top = document.documentElement.scrollTop||document.body.scrollTop;
+			if(!this.props.calling){
+				// console.log(top + 415)
+				// console.log($('#container').height());
+				if((top + 390)> $('#container').height()){ 
+					this.props.showLoading()
+					this.props.startCalling()
+					this.props.handleDate(getd1(this.props.date));
+					this.props.getNextData(this.props.date);
+				}
+			}  
+		});
+	}
 
 	//获取刚进入时列表
 	init() {
 		$(document).unbind('scroll');	//解除滚动到底部自动加载
-
-		function s() {
-			var banner = document.getElementById('banner');    
-			var height = banner.offsetHeight;
-			$(document).unbind('scroll').on('scroll', ()=>{
-				var top = document.documentElement.scrollTop||document.body.scrollTop;
-				if(!this.props.calling){
-					// console.log(top + 415)
-					// console.log($('#container').height());
-					if((top + 390)> $('#container').height()){ 
-						this.props.showLoading()
-						this.props.handleDate(getd1(this.props.date));
-						this.props.getNextData(this.props.date);
-					}
-				}  
-			});
-		}
-
-		this.props.getHomeData(s.bind(this));
+		this.props.getHomeData(this.s.bind(this));
 	}
 
 	//上拉获取下一页数据
@@ -91,8 +90,22 @@ class App extends Component {
 			      draggable: true 		// Choose whether you can drag to open on touch screens
 			    }
 			  );
-			this.init();
-			this.props.getThemesData();
+
+			// this.init();
+			// this.props.getThemesData();
+
+			if(this.props.stories.length === 0 ){
+				// this.props.fetchHomeData(this.s)
+				this.init();
+				this.props.getThemesData();
+			}else{
+				console.log(this.props.route)
+				this.s()
+				// if(this.props.route.component.displayName == "Connect(Home)"){
+				// 	window.scrollTo(0,this.props.pos);
+				// }
+			}
+			
 		})
     }
 
@@ -127,6 +140,7 @@ class App extends Component {
                     <HomeList 
 						stories={this.props.stories}
 						loading={this.props.loading}
+						getDetailData={this.props.getDetailData}
 						/>
                 </div>
 		    </div>
@@ -134,21 +148,24 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-	themes: state.themes,
-	top_stories: state.top_stories,
-	stories: state.stories,
-	loading: state.loading,
-	calling: state.calling,
-	date: state.date,
-	tabId: state.tabId,
-});
+// const mapStateToProps = state => ({
+// 	themes: state.home.themes,
+// 	top_stories: state.home.top_stories,
+// 	stories: state.home.stories,
+// 	loading: state.home.loading,
+// 	calling: state.home.calling,
+// 	date: state.home.date,
+// 	tabId: state.home.tabId,
+// });
+
+const mapStateToProps = state => ({...state.home})
 
 const mapDispatchToProps = dispatch => ({
     getThemesData: () => dispatch(getThemesData()),
 	getHomeData: (cb) => dispatch(getHomeData(cb)),
 	getTabData: (tabId) => dispatch(getTabData(tabId)),
 	getNextData: (date) => dispatch(getNextData(date)),
+	getDetailData: id => dispatch(getDetailData(id)),
 	showLoading: () => dispatch(showLoading()),
 	hideLoading: () => dispatch(hideLoading()),
 	startCalling: () => dispatch(startCalling()),
@@ -157,5 +174,5 @@ const mapDispatchToProps = dispatch => ({
 	handleTab: (tabId) => dispatch(handleTab(tabId)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
 

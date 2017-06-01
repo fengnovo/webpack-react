@@ -40,6 +40,24 @@ img {
     overflow: auto;
     height: 100%;
 }*/
+
+#list a:link { 
+    color:#000000; 
+    text-decoration:none; 
+} 
+#list a:visited { 
+    color:#b2b2b2; 
+    text-decoration:none; 
+} 
+#list a:hover { 
+    color:#d90a81; 
+    text-decoration:none; 
+} 
+#list a:active { 
+    color:#d90a81; 
+    text-decoration:none; 
+}   
+
 #app {
     height: 100%;
     background: rgb(240, 240, 240); 

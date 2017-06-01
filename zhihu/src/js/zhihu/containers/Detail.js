@@ -44,7 +44,8 @@ class Detail extends React.Component {
 
     componentDidMount (){
         $(() => {
-            this.props.getDetailData(this.articleId)
+            // this.props.getDetailData(this.articleId)
+            window.scrollTo(0,0)
         })
     }
 
@@ -71,10 +72,12 @@ class Detail extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => {
+    console.log(state);
+    return ({
     loading: state.detail.loading,
     content: state.detail.content
-})
+})}
 
 const mapDispatchToProps = dispatch => ({
     getDetailData: articleId => dispatch(getDetailData(articleId))

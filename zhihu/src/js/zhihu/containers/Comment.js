@@ -29,6 +29,7 @@ class Comment extends Component {
     componentDidMount() {
 		$(() => {
 			this.props.getCommentData(this.articleId)
+			window.scrollTo(0,0)
 		})
     }
 
