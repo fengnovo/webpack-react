@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --devtool eval --progress --colors --hot --inline --port 8888 --history-api-fallback",
-     "start": "webpack-dev-server --port 8880 --devtool eval --progress --colors --hot --inline --history-api-fallback"
+    "start": "webpack-dev-server --port 8880 --devtool eval --progress --colors --hot --inline --history-api-fallback",
+    "build": "rm -fr ./build && NODE_ENV=production && webpack --progress --hide-modules"
+  
   },
   "keywords": [],
   "author": "",

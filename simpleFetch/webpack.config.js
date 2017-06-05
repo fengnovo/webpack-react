@@ -13,7 +13,7 @@ if (process.argv.indexOf('-p') > -1) { //生产环境,参数有-p
             NODE_ENV: JSON.stringify('production')
         }
     }));
-    outpath = '/Users/sz/Desktop/FE_projects/Szzzzz.github.io/source/demo/cnode/build/'
+    outpath = path.resolve(__dirname, 'assets');
 }
 
 module.exports = {

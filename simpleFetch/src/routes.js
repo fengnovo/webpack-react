@@ -38,3 +38,32 @@ let routes = (
                 <Route path='comment/:id' component={Comment}/>
         </Route>)
 export default routes;
+
+
+
+// let routes = (
+//         <Route render={({ location }) => {
+//                   console.log('location.pathname: ', location)
+//                   let cls = 'normal'
+//                   if (location.pathname === '/search') {
+//                       cls = 'left'
+//                   } else if (location.pathname.indexOf('bookList') > -1) {
+//                       cls = 'left'
+//                   }
+//                   return(
+//                       <CSSTransitionGroup
+//                           transitionName={cls}
+//                           transitionEnter={true}
+//                           transitionLeave={true}
+//                           transitionEnterTimeout={400}
+//                           transitionLeaveTimeout={400}
+//                       >
+//                         <Route path='/' component={App}>
+//                                 <IndexRoute component={Home}/>
+//                                 <Route path='detail/:id' component={Detail}/>
+//                                 <Route path='comment/:id' component={Comment}/>
+//                         </Route>
+//                         </CSSTransitionGroup>
+//                   )
+//               }}/>)
+// export default routes;
