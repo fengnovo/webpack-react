@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { getThemesData, getHomeData,getTabData,getNextData,
-showLoading, hideLoading,startCalling,stopCalling,	getDetailData,
+showLoading, hideLoading,startCalling,stopCalling,	
+getDetailData, getCountData,
 handleDate,handleTab } from '../actions'
 
 import 'es6-promise'
@@ -21,8 +22,6 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
-
-
 		this.init = this.init.bind(this)
 		this.handleTab = this.handleTab.bind(this)
 		this.refreshTab = this.refreshTab.bind(this)
@@ -35,12 +34,15 @@ class Home extends Component {
 		$(document).unbind('scroll').on('scroll', ()=>{
 			var top = document.documentElement.scrollTop||document.body.scrollTop;
 			if(!this.props.calling){
-				// console.log(top + 415)
-				// console.log($('#container').height());
-				if((top + 390)> $('#container').height()){ 
+				// console.log(top) 
+				// console.log($('#container').height()) 
+				if((top + 430)> $('#container').height()){ 
+					console.log(this.props.loading)
 					this.props.showLoading()
 					this.props.startCalling()
-					this.props.handleDate(getd1(this.props.date));
+					// console.log(this.props.date);
+					// this.props.handleDate(this.props.date);
+					// this.props.handleDate(getd1(this.props.date));
 					this.props.getNextData(this.props.date);
 				}
 			}  
@@ -91,19 +93,12 @@ class Home extends Component {
 			    }
 			  );
 
-			// this.init();
-			// this.props.getThemesData();
-
-			if(this.props.stories.length === 0 ){
-				// this.props.fetchHomeData(this.s)
+			if(this.props.stories.length < 2 ){
 				this.init();
 				this.props.getThemesData();
 			}else{
 				console.log(this.props.route)
 				this.s()
-				// if(this.props.route.component.displayName == "Connect(Home)"){
-				// 	window.scrollTo(0,this.props.pos);
-				// }
 			}
 			
 		})
@@ -136,10 +131,11 @@ class Home extends Component {
 					refreshHomePage={this.init}
 					/>
                 <div id="scrollArea">
-                    <Banner top_stories={this.props.top_stories} />
+                    <Banner top_stories={this.props.top_stories} getDetailData={this.props.getDetailData}/>
                     <HomeList 
 						stories={this.props.stories}
 						loading={this.props.loading}
+						date={this.props.date}
 						getDetailData={this.props.getDetailData}
 						/>
                 </div>
@@ -148,16 +144,6 @@ class Home extends Component {
     }
 }
 
-// const mapStateToProps = state => ({
-// 	themes: state.home.themes,
-// 	top_stories: state.home.top_stories,
-// 	stories: state.home.stories,
-// 	loading: state.home.loading,
-// 	calling: state.home.calling,
-// 	date: state.home.date,
-// 	tabId: state.home.tabId,
-// });
-
 const mapStateToProps = state => ({...state.home})
 
 const mapDispatchToProps = dispatch => ({
@@ -165,7 +151,10 @@ const mapDispatchToProps = dispatch => ({
 	getHomeData: (cb) => dispatch(getHomeData(cb)),
 	getTabData: (tabId) => dispatch(getTabData(tabId)),
 	getNextData: (date) => dispatch(getNextData(date)),
-	getDetailData: id => dispatch(getDetailData(id)),
+	getDetailData: id => {
+		dispatch(getDetailData(id))
+		dispatch(getCountData(id))
+	},
 	showLoading: () => dispatch(showLoading()),
 	hideLoading: () => dispatch(hideLoading()),
 	startCalling: () => dispatch(startCalling()),

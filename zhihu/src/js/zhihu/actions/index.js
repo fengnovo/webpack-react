@@ -26,6 +26,11 @@ export const RECEIVE_COMMENT_DATA = 'RECEIVE_COMMENT_DATA'
 export const REQUEST_DETAIL_DATA = 'REQUEST_DETAIL_DATA'
 export const RECEIVE_DETAIL_DATA = 'RECEIVE_DETAIL_DATA'
 
+export const REQUEST_COUNT_DATA = 'REQUEST_COUNT_DATA'
+export const RECEIVE_COUNT_DATA = 'RECEIVE_COUNT_DATA'
+
+import {getd3 } from '../util'
+
 //侧滑栏数据
 function requestGetThemesData() {               //发起请求
   return {
@@ -90,9 +95,10 @@ export function getHomeData(cb) {
               return res.json();
             })
             .then(data=>{
+              dispatch(handleDate(data.date)) //把后台返回的日期放到store
+              data.stories.unshift({date: getd3(data.date)})
               dispatch(receiveGetHomeData(data))
               cb();
-              // dispatch(stopCalling())
             })
             .catch((e)=>{
               new Error(e)
@@ -129,6 +135,8 @@ export function getNextData(date) {
             return res.json();
           })
           .then(data=>{
+            dispatch(handleDate(data.date)) //把后台返回的日期放到store
+            data.stories.unshift({date: getd3(data.date)})
             dispatch(receiveNextData(data))
             dispatch(stopCalling())
           })
@@ -171,6 +179,7 @@ export function getTabData(tabId) {
           })
           .then(data=>{
             $('html,body').animate({ scrollTop: 0 }, 0);
+            // dispatch(handleDate(data.date))
             dispatch(receiveTabData(data))
             $(document).unbind('scroll');	//解除滚动到底部自动加载
           })
@@ -248,7 +257,7 @@ export function getCommentData(articleId) {            //将上面两个请求�
             return res.json()
           })
           .then(data=>{
-            dispatch(receiveCommentData(data))
+              dispatch(receiveCommentData(data))
           })
     }
 }
@@ -284,7 +293,7 @@ export function getDetailData(articleId) {            //将上面两个请求动
                     }
                     var _html = '';
                     if(data.image){
-                        _html += '<div class="banner" style="background-image:url('+imgUrl(data.image)+')">'
+                        _html += '<div class="banner" style="background-size: cover;background-image:url('+imgUrl(data.image)+')">'
                                 +'<span class="title">'+data.title+'</span>'
                                 +'</div>';
                     }
@@ -301,6 +310,37 @@ export function getDetailData(articleId) {            //将上面两个请求动
                         });
                          
                     },300)
+                })
+                .catch(e=>{
+                    new Error(e)
+                })
+    }
+}
+
+
+//正文点赞数，评论数数据
+function requestCountData() {        
+  return {
+    type: REQUEST_COUNT_DATA
+  }
+}
+function receiveCountData(data) {    //接受到请求结果
+  return {
+    type: RECEIVE_COUNT_DATA,
+		comments: data.comments,
+    popularity: data.popularity
+  }
+}
+
+export function getCountData(articleId) {            //将上面两个请求动作连接
+    return dispatch => {
+        dispatch(requestCountData())
+        fetch(`http://111.230.139.105/api/zhihu/story-extra/${articleId}`)
+                .then(res=>{
+                    return res.json()
+                })
+                .then(data=>{
+                    dispatch(receiveCountData(data)) 
                 })
                 .catch(e=>{
                     new Error(e)

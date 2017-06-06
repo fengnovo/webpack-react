@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=dev webpack-dev-server --progress --profile --colors --hot --inline",
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --progress --profile --colors --hot --inline",
-    "build": "cross-env NODE_ENV=production webpack --progress --profile --colors",
+    "build": "rm -fr ./build && cross-env NODE_ENV=production webpack --progress --profile --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "fengnovo",

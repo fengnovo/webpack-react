@@ -42,7 +42,7 @@ img {
 }*/
 
 #list a:link { 
-    color:#000000; 
+    color:#000; 
     text-decoration:none; 
 } 
 #list a:visited { 
@@ -50,13 +50,22 @@ img {
     text-decoration:none; 
 } 
 #list a:hover { 
-    color:#d90a81; 
-    text-decoration:none; 
+    color:#000; 
+    text-decoration: none; 
 } 
 #list a:active { 
-    color:#d90a81; 
+    color:#b2b2b2; 
     text-decoration:none; 
 }   
+
+#list .stories-tip {
+    background: none;
+    text-align: left;
+    margin-left: .5rem;
+    font-size: 1.1rem;
+    color: #757373;
+}
+
 
 #app {
     height: 100%;
@@ -76,6 +85,11 @@ img {
 #container {
     padding-bottom: 1.4rem;
 }
+
+#slide-out li .slide-list {
+    width: 50%;
+}
+
 #slide-out li img {
     width: 3rem;
 }
@@ -150,7 +164,7 @@ img {
     padding: .5rem;
 }
 .p-5{
-    padding: 1rem 2rem  .5rem 1rem;
+    padding: 1rem 2rem  .7rem 1rem;
 }
 .m-r-1 {
     margin: 0 1rem 0 0;
@@ -175,7 +189,7 @@ img {
 
 #list p{
     width: 72%;
-    padding: .5rem 0;
+    padding-top: .3rem;
     text-align: left;
 }
 
@@ -203,11 +217,12 @@ img {
 }
 
 #detail .banner {
+    background-size: cover;
     height: 200px;
     width: 100%;
-    background: no-repeat center center;
+    background: 10%;
     overflow: hidden;
-    padding: 10rem 1rem 0;
+    padding: 10rem 0 0;
 }
 
 .slider .slides li .caption {
@@ -220,8 +235,26 @@ img {
 }
 
 #detail .title {
+    display: block;
     font-size: 1.4rem;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0,0,0, 0.4);
+    width: 100%;
+    margin: 0;
+    padding: 0 1rem;
+}
+
+
+#detail .comment-count-icon {
+    display: inline-block;
+}
+
+#detail .comment-count {
+    margin-left: 9px;
+    display: -webkit-inline-box;
+    padding-bottom: 26px;
+    line-height: 30px;
+    height: 28px;
 }
 
 #detail #loading {

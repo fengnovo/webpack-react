@@ -20,9 +20,16 @@ import {
   REQUEST_COMMENT_DATA,
   RECEIVE_COMMENT_DATA,
 
-  RECEIVE_DETAIL_DATA
+  RECEIVE_DETAIL_DATA,
+
+  REQUEST_COUNT_DATA,
+  RECEIVE_COUNT_DATA,
 
 } from '../actions'
+
+import { getd1, getd2 } from '../util'
+
+let today = getd1(getd2(new Date())) //today作为初始的date
 
 function themes(state = [], action) {
   switch (action.type) {
@@ -84,7 +91,7 @@ function calling(state = false, action) {
   }
 }
 
-function date(state = 20170520, action) {
+function date(state = today, action) {
   switch (action.type) {
     case HANDLE_DATE:
       return action.date
@@ -115,12 +122,19 @@ function comments(state = {comments:[],leng:0}, action) {
   }
 }
 
-function detail(state = {loading: true,content: ''}, action) {
+function detail(state = {loading: true,content: '',comments:0,popularity:0}, action) {
   switch (action.type) {
     case RECEIVE_DETAIL_DATA:
       return {
+          ...state,
           loading: action.loading,
           content: action.content
+      }
+    case RECEIVE_COUNT_DATA:
+      return {
+          ...state,
+          comments: action.comments,
+          popularity: action.popularity
       }
     default:
       return state
@@ -137,6 +151,8 @@ const home = combineReducers({
   date,
   tabId,
 })
+
+
 
 
 const rootReducer = combineReducers({

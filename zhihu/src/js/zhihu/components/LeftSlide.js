@@ -34,10 +34,10 @@ class LeftSide extends Component {
 					</a>
 				</li>
 				<li className="light-blue">
-					<a className="waves-effect waves-light i-b">
+					<a className="waves-effect waves-light i-b slide-list">
 						<span className="color-white"><i className="material-icons slide-left-icon">star</i>我的收藏</span>
 					</a>
-					<a className="waves-effect waves-light i-b">
+					<a className="waves-effect waves-light i-b slide-list">
 						<span className="color-white"><i className="material-icons slide-left-icon">file_download</i>离线下载</span>
 					</a>
 				</li>

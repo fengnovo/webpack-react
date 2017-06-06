@@ -28,8 +28,11 @@ class Comment extends Component {
 	
     componentDidMount() {
 		$(() => {
-			this.props.getCommentData(this.articleId)
+			
 			window.scrollTo(0,0)
+			if(this.props.comments && this.props.comments.length == 0){
+                this.props.getCommentData(this.articleId)
+            }
 		})
     }
 
@@ -71,10 +74,7 @@ class Comment extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-	leng: state.comments.leng,
-	comments: state.comments.comments
-})
+const mapStateToProps = state => ({...state.comments})
 
 const mapDispatchToProps = (dispatch) => ({
 	getCommentData: (articleId) =>{

@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import {Link} from 'react-router-dom'
 
 import {imgUrl} from '../util'
 import Loading from '../components/Loading'
-import {getDetailData} from '../actions'
+import {getDetailData,getCountData,getCommentData} from '../actions'
 
 class Detail extends React.Component {
     constructor (props) {
@@ -17,7 +18,7 @@ class Detail extends React.Component {
         this.back = this.back.bind(this)
         this.share = this.share.bind(this)
         this.star = this.star.bind(this)
-        this.insert_comment = this.insert_comment.bind(this)
+        // this.insert_comment = this.insert_comment.bind(this)
         this.thumb_up = this.thumb_up.bind(this)
     }
 
@@ -33,10 +34,11 @@ class Detail extends React.Component {
         console.log('star');
     }
 
-    insert_comment(){
-        console.log('insert_comment');
-        window.location.href = `/comment/${this.articleId}`
-    }
+    // insert_comment(){
+    //     console.log('insert_comment');
+    //     // this.props.getCommentData(this.articleId)
+    //     // window.location.href = `/comment/${this.articleId}`
+    // }
 
     thumb_up(){
         console.log('thumb_up');
@@ -46,6 +48,21 @@ class Detail extends React.Component {
         $(() => {
             // this.props.getDetailData(this.articleId)
             window.scrollTo(0,0)
+            if(this.props.content == ''){
+                this.props.getDetailData(this.articleId)
+                this.props.getCountData(this.articleId)
+            }else {
+				setTimeout(()=>{
+					console.log(0);
+					$('.img-place-holder').remove();
+					$('#detail-content img').map(function(i,item){
+						// console.log(item)
+						var x = imgUrl($(item).attr('src'));
+						$(item).attr('src',x);
+					});
+						
+				},300)
+			}
         })
     }
 
@@ -60,8 +77,17 @@ class Detail extends React.Component {
 						<ul className="right">
 							<li><a className="waves-effect waves-light"><i className="material-icons" onClick={this.share}>share</i></a></li>
 							<li><a className="waves-effect waves-light"><i className="material-icons" onClick={this.star}>star</i></a></li>
-							<li><a className="waves-effect waves-light"><i className="material-icons" onClick={this.insert_comment}>insert_comment</i></a></li>
-							<li><a className="waves-effect waves-light"><i className="material-icons" onClick={this.thumb_up}>thumb_up</i></a></li>
+							<li>
+                                <Link to={"/comment/"+this.articleId} 
+                                        onClick={this.props.getCommentData.bind(this,this.articleId)} 
+                                        className="waves-effect waves-light">
+                                        <i className="material-icons comment-count-icon">insert_comment</i>
+                                        <span className="comment-count">{this.props.comments}</span>
+                                </Link></li>
+							<li><a className="waves-effect waves-light">
+                                <i className="material-icons comment-count-icon" onClick={this.thumb_up}>thumb_up</i>
+                                <span className="comment-count">{this.props.popularity}</span>
+                                </a></li>
 						</ul>
 						
 					</div>
@@ -72,16 +98,13 @@ class Detail extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
-    console.log(state);
-    return ({
-    loading: state.detail.loading,
-    content: state.detail.content
-})}
+const mapStateToProps = state => ({ ...state.detail })
+
 
 const mapDispatchToProps = dispatch => ({
-    getDetailData: articleId => dispatch(getDetailData(articleId))
-    
+    getDetailData: articleId => dispatch(getDetailData(articleId)),
+    getCountData: articleId => dispatch(getCountData(articleId)),
+    getCommentData: articleId => dispatch(getCommentData(articleId))
 })
 
 Detail = connect(mapStateToProps,mapDispatchToProps)(Detail)

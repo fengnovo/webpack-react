@@ -22,7 +22,7 @@ module.exports = {
 	},
 	output:{
 		path: BUILD_PATH,
-        publicPath: '/',     //后面的就直接css/style.css  imgs/img.png
+        publicPath: './',     //后面的就直接css/style.css  imgs/img.png
 		filename:'js/[name]-[hash:8].js'
 	},
 	resolve:{
@@ -49,7 +49,7 @@ module.exports = {
 	        include: APP_PATH,
 	        query: {
 	          //添加两个presents 使用这两种presets处理js或者jsx文件
-	          presets: ['es2015', 'react']
+	          presets: ['es2015', 'react','stage-0']
 	        }
 	      },
           {
