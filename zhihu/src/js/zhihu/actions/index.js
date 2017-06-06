@@ -28,6 +28,7 @@ export const RECEIVE_DETAIL_DATA = 'RECEIVE_DETAIL_DATA'
 
 export const REQUEST_COUNT_DATA = 'REQUEST_COUNT_DATA'
 export const RECEIVE_COUNT_DATA = 'RECEIVE_COUNT_DATA'
+export const SET_POS = 'SET_POS'
 
 import {getd3 } from '../util'
 
@@ -189,6 +190,13 @@ export function getTabData(tabId) {
     }
 }
 
+export function setPos(pos) {
+  return {
+    type: SET_POS,
+    pos
+  }
+}
+
 
 export function showLoading() {              
   return {
@@ -274,6 +282,7 @@ function receiveDetailData(data) {    //接受到请求结果
   return {
     type: RECEIVE_DETAIL_DATA,
     loading: false,
+    css: data.css,
 		content: data.content
   }
 }
@@ -286,19 +295,19 @@ export function getDetailData(articleId) {            //将上面两个请求动
                     return res.json()
                 })
                 .then(data=>{
-                    // console.log(data);
                     if(data.css){
-                        $('#cssKey').remove();
-                        $('<link id="cssKey" type="text/css" rel="stylesheet" href='+data.css+' />').appendTo('head'); 
+                        $('[data-cssname=cssKey]').remove()
+                        $('<link data-cssname="cssKey" type="text/css" rel="stylesheet" href='+data.css+' />').appendTo('head') 
                     }
                     var _html = '';
                     if(data.image){
                         _html += '<div class="banner" style="background-size: cover;background-image:url('+imgUrl(data.image)+')">'
                                 +'<span class="title">'+data.title+'</span>'
-                                +'</div>';
+                                +'</div>'
                     }
                     _html += '<div>'+data.body+'</div>';
                     dispatch(receiveDetailData({
+                        css: data.css,
                         content: _html
                     }))
                     setTimeout(()=>{

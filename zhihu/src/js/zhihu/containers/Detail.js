@@ -18,7 +18,6 @@ class Detail extends React.Component {
         this.back = this.back.bind(this)
         this.share = this.share.bind(this)
         this.star = this.star.bind(this)
-        // this.insert_comment = this.insert_comment.bind(this)
         this.thumb_up = this.thumb_up.bind(this)
     }
 
@@ -34,26 +33,22 @@ class Detail extends React.Component {
         console.log('star');
     }
 
-    // insert_comment(){
-    //     console.log('insert_comment');
-    //     // this.props.getCommentData(this.articleId)
-    //     // window.location.href = `/comment/${this.articleId}`
-    // }
-
     thumb_up(){
         console.log('thumb_up');
     }
 
     componentDidMount (){
         $(() => {
-            // this.props.getDetailData(this.articleId)
             window.scrollTo(0,0)
             if(this.props.content == ''){
                 this.props.getDetailData(this.articleId)
                 this.props.getCountData(this.articleId)
             }else {
 				setTimeout(()=>{
-					console.log(0);
+                    if(this.props.css){
+                        $('[data-cssname=cssKey]').remove()
+                        $('<link data-cssname="cssKey" type="text/css" rel="stylesheet" href='+this.props.css+' />').appendTo('head') 
+                    }
 					$('.img-place-holder').remove();
 					$('#detail-content img').map(function(i,item){
 						// console.log(item)
@@ -65,6 +60,10 @@ class Detail extends React.Component {
 			}
         })
     }
+
+    componentWillUnmount (){
+		$('[data-cssname=cssKey]').remove()	//卸载样式
+	}
 
     render () {
         return <div id="detail">

@@ -27,6 +27,7 @@ class Comment extends Component {
 	}
 	
     componentDidMount() {
+		$('[data-cssname=cssKey]').remove()	//卸载样式
 		$(() => {
 			
 			window.scrollTo(0,0)

@@ -25,6 +25,8 @@ import {
   REQUEST_COUNT_DATA,
   RECEIVE_COUNT_DATA,
 
+  SET_POS,
+
 } from '../actions'
 
 import { getd1, getd2 } from '../util'
@@ -109,6 +111,15 @@ function tabId(state = '', action) {
   }
 }
 
+function pos(state = 0, action) {
+  switch (action.type) {
+    case SET_POS:
+      return action.pos;
+    default:
+      return state;
+  }
+}
+
 
 function comments(state = {comments:[],leng:0}, action) {
   switch (action.type) {
@@ -122,13 +133,14 @@ function comments(state = {comments:[],leng:0}, action) {
   }
 }
 
-function detail(state = {loading: true,content: '',comments:0,popularity:0}, action) {
+function detail(state = {loading: true,content: '',comments:0,popularity:0,css: null}, action) {
   switch (action.type) {
     case RECEIVE_DETAIL_DATA:
       return {
           ...state,
           loading: action.loading,
-          content: action.content
+          content: action.content,
+          css: action.css
       }
     case RECEIVE_COUNT_DATA:
       return {
@@ -150,6 +162,7 @@ const home = combineReducers({
   calling,
   date,
   tabId,
+  pos,
 })
 
 

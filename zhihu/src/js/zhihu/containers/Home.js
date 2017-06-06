@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { getThemesData, getHomeData,getTabData,getNextData,
 showLoading, hideLoading,startCalling,stopCalling,	
 getDetailData, getCountData,
-handleDate,handleTab } from '../actions'
+handleDate,handleTab,setPos } from '../actions'
 
 import 'es6-promise'
 import fetch from 'isomorphic-fetch'
@@ -97,7 +97,9 @@ class Home extends Component {
 				this.init();
 				this.props.getThemesData();
 			}else{
-				console.log(this.props.route)
+				if(this.props.pos > 0){ //之前有位置，还原到原来的位置，不依赖material的自动还原
+					$('body').animate({ scrollTop: this.props.pos }, 0);
+				}
 				this.s()
 			}
 			
@@ -105,6 +107,7 @@ class Home extends Component {
     }
 
 	componentWillUnmount (){
+		this.props.setPos($('body').scrollTop());
 		$(document).unbind('scroll');	//解除滚动到底部自动加载
 	}
 
@@ -161,6 +164,7 @@ const mapDispatchToProps = dispatch => ({
 	stopCalling: () => dispatch(stopCalling()),
 	handleDate: (date) => dispatch(handleDate(date)),
 	handleTab: (tabId) => dispatch(handleTab(tabId)),
+	setPos: pos => dispatch(setPos(pos)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
