@@ -1,56 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-class Ch extends React.Component {
-    constructor(...args) {
-        super(...args)
-    }
-    render() {
-        return <ul>
-            {React.Children.map(this.props.children, item => item)}
-        </ul>
-    }
-}
-
-class Eh extends React.Component {
-    constructor(...args) {
-        super(...args)
-    }
-    render() {
-        return <ul>
-            {this.props.children}
-        </ul>
-    }
-}
-
 class App extends React.Component {
-    x1 = '3'
-    x2 = '4'
     constructor(...args) {
         super(...args)
-        console.log(this.x1)
-        console.log(this.x2)
-        this.x1 = '1'
-        this.x2 = <li>1</li>
-        console.log(this.x1)
-        console.log(this.x2)
+        this.state = {
+            clickOne: 'aa1'
+        }
     }
     render() {
+        let that = this;
         return <div>
-          <p>测试</p>
-          <ul>
-            {this.x2}
-          </ul>
-          <Ch>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-          </Ch>
-          <Eh>
-              <li>11</li>
-              <li>22</li>
-              <li>33</li>
-          </Eh>
+        <button onClick={() => this.setState({clickOne: 'aa3'})}>222</button>
+        <div>
+          {function() {
+              return ['aa1','aa2','aa3'].map(item => {
+                  return (
+                      <div key={item} style={ {width:200, height:100, backgroundColor: '#ccc'} } onClick={()=>{
+                          that.setState({clickOne: item});
+                      }}>
+                            <button style={Object.assign({},{ width:100, height:50 }, function(){
+                                console.log(item);
+                                if(item == that.state.clickOne) {
+                                    return {backgroundColor: 'red'}
+                                }
+                            }())}>测试按钮{item}</button>
+                      </div>
+                  )
+              })
+          }()}
+          </div>
         </div>
     }
 }
